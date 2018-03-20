@@ -14,15 +14,19 @@ Travel review
 <code>
 spring.jpa.hibernate.ddl-auto=create 
 </code>
+
 <code>
 spring.datasource.url=jdbc:mysql://localhost/nwt2_MSNAME
 </code>
+
 <code>
 spring.datasource.username=DB_USER
 </code>
+
 <code>
 spring.datasource.password=DB_PASSWORD
 </code>
+
 <code>
 spring.datasource.driverClassName=com.mysql.jdbc.Driver  
 </code>
@@ -32,9 +36,11 @@ spring.datasource.driverClassName=com.mysql.jdbc.Driver  
 <code>
 MSNAME => microservice name
 </code>
+
 <code>
 DB_USER => your local database user (if not setup anything, use <i>root</i>
 </code>
+
 <code>
 DB_PASSWORD => local database password (default for <i>root</li> is an empty string
 </code>
