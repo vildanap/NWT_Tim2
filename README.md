@@ -12,11 +12,11 @@ Travel review
 </ul>
 
 <code>
-spring.jpa.hibernate.ddl-auto=create // this will create new database and flush all the data on project startup<br />
-spring.datasource.url=jdbc:mysql://localhost/nwt2_MSNAME <br />
-spring.datasource.username=DB_USER<br />
-spring.datasource.password=DB_PASSWORD<br />
-spring.datasource.driverClassName=com.mysql.jdbc.Driver  
+spring.jpa.hibernate.ddl-auto=create // this will create new database and flush all the data on project startup . 
+spring.datasource.url=jdbc:mysql://localhost/nwt2_MSNAME . 
+spring.datasource.username=DB_USER . 
+spring.datasource.password=DB_PASSWORD . 
+spring.datasource.driverClassName=com.mysql.jdbc.Driver  
 </code>
 
 <h5>Variables</h5>
