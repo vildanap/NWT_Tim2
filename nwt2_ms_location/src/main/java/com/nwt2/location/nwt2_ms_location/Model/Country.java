@@ -1,9 +1,6 @@
 package com.nwt2.location.nwt2_ms_location.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Dragnic on 3/20/2018.
@@ -11,8 +8,9 @@ import javax.persistence.Id;
 @Entity
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_generator")
+    @SequenceGenerator(name="country_generator", sequenceName = "country_seq", allocationSize=1)
+    private long id;
 
     private String name;
 

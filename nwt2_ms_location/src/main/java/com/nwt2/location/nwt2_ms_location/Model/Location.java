@@ -11,10 +11,11 @@ import javax.persistence.*;
 public class Location {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_generator")
+    @SequenceGenerator(name="location_generator", sequenceName = "location_seq", allocationSize=1)
+    private long id;
 
-       private String photoUrl;
+    private String photoUrl;
     private String name;
     private String description;
     private float latitude;
@@ -35,7 +36,9 @@ public class Location {
         CountryId = countryId;
     }
 
+    private Location() { } // JPA only
 
+    public Long getId() { return id;  }
 
     public String getPhotoUrl() {
         return photoUrl;
