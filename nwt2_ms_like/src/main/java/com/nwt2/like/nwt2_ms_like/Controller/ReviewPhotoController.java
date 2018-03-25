@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class ReviewPhotoController {
 
     // ------------------- Create a review photo ----------------------------------------
     @RequestMapping(method = RequestMethod.POST, value="/new")
-    public ResponseEntity<?> createReviewPhoto(@RequestBody ReviewPhoto reviewPhoto, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createReviewPhoto(@Valid @RequestBody ReviewPhoto reviewPhoto, UriComponentsBuilder ucBuilder) {
         if(reviewPhotoRepository.existsByReviewIdAndPhotoId(reviewPhoto.getReviewId(), reviewPhoto.getPhotoId())) {
             return new ResponseEntity(new CustomErrorType("Review Photo with the same parameters already exists."),
                     HttpStatus.CONFLICT);
@@ -63,7 +64,7 @@ public class ReviewPhotoController {
 
     // ------------------- Update a review photo ----------------------------------------
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<?> updatePhoto(@PathVariable("id") long id, @RequestBody ReviewPhoto reviewPhoto) {
+    public ResponseEntity<?> updatePhoto(@Valid @PathVariable("id") long id, @RequestBody ReviewPhoto reviewPhoto) {
 
         Optional<ReviewPhoto> existingRPhoto = this.reviewPhotoRepository.findById(id);
 

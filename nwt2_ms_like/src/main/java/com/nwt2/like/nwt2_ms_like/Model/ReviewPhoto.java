@@ -1,6 +1,7 @@
 package com.nwt2.like.nwt2_ms_like.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by amina on 3/20/2018.
@@ -12,8 +13,11 @@ public class ReviewPhoto {
     @SequenceGenerator(name="review_photo_generator", sequenceName = "review_photo_seq", allocationSize=1)
     private long id;
 
-    // Foreing keys
+    // Foreign keys
+    @NotNull
     private long reviewId;
+
+    @NotNull
     private long photoId;
 
     // constructor
