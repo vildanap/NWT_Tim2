@@ -1,9 +1,6 @@
 package com.nwt2.like.nwt2_ms_like.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by amina on 3/20/2018.
@@ -11,8 +8,9 @@ import javax.persistence.Id;
 @Entity
 public class Photo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_generator")
+    @SequenceGenerator(name="photo_generator", sequenceName = "photo_seq", allocationSize=1)
+    private long id;
 
     private String url;
 
@@ -21,7 +19,19 @@ public class Photo {
         this.url=url;
     }
 
-    public String getUrl() { return url; }
-    public void setUrl(String url) { this.url = url; }
+    //JPA only
+    private Photo() { }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public long getId() {
+        return id;
+    }
 
 }
