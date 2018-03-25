@@ -11,6 +11,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Created by amina on 3/25/2018.
+ */
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {

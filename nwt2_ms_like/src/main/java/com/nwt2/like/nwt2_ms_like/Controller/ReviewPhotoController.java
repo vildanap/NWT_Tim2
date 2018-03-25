@@ -12,6 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Created by amina on 3/25/2018.
+ */
 @RestController
 @RequestMapping("/reviewphotos")
 public class ReviewPhotoController {
@@ -43,7 +46,7 @@ public class ReviewPhotoController {
         return new ResponseEntity<Optional<ReviewPhoto>>(reviewPhoto, HttpStatus.OK);
     }
 
-    // ------------------- Create a photo ----------------------------------------
+    // ------------------- Create a review photo ----------------------------------------
     @RequestMapping(method = RequestMethod.POST, value="/new")
     public ResponseEntity<?> createReviewPhoto(@RequestBody ReviewPhoto reviewPhoto, UriComponentsBuilder ucBuilder) {
         if(reviewPhotoRepository.existsByReviewIdAndPhotoId(reviewPhoto.getReviewId(), reviewPhoto.getPhotoId())) {
@@ -58,7 +61,7 @@ public class ReviewPhotoController {
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
-    // ------------------- Update a photo ----------------------------------------
+    // ------------------- Update a review photo ----------------------------------------
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public ResponseEntity<?> updatePhoto(@PathVariable("id") long id, @RequestBody ReviewPhoto reviewPhoto) {
 
@@ -80,7 +83,7 @@ public class ReviewPhotoController {
         return new ResponseEntity<Optional<ReviewPhoto>>(existingRPhoto, HttpStatus.OK);
     }
 
-    // ------------------- Delete a photo ----------------------------------------
+    // ------------------- Delete a review photo ----------------------------------------
     @RequestMapping(method = RequestMethod.DELETE, value = "/{reviewPhotoId}")
     public ResponseEntity<?> deletePhoto(@PathVariable Long reviewPhotoId) {
         Optional<ReviewPhoto> reviewPhoto = this.reviewPhotoRepository.findById(reviewPhotoId);

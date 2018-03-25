@@ -1,7 +1,8 @@
 package com.nwt2.like.nwt2_ms_like.Controller;
 
-import org.springframework.util.MultiValueMap;
-
+/**
+ * Created by amina on 3/25/2018.
+ */
 public class CustomErrorType {
 
     private String errorMessage;
