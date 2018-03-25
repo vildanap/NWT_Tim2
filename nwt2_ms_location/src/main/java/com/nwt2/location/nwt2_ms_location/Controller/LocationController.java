@@ -3,9 +3,13 @@ package com.nwt2.location.nwt2_ms_location.Controller;
 import com.nwt2.location.nwt2_ms_location.Model.Location;
 import com.nwt2.location.nwt2_ms_location.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,22 +19,93 @@ import java.util.Optional;
 @RequestMapping("/locations")
 public class LocationController {
     private final LocationRepository locationRepository;
+
     @Autowired
     public LocationController(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
-
+    // -------------------Retrieve All Locations---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    Collection<Location> readLocations() {
-
-        return this.locationRepository.findAll();
+    public ResponseEntity<List<Location>> listAllLocations() {
+        List<Location> locations = locationRepository.findAll();
+        if (locations.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            // You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
     }
 
+    // -------------------Retrieve One Location---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/{locationId}")
-    Optional<Location> readLocation(@PathVariable Long locationId) {
+    ResponseEntity<?> getLocation (@PathVariable Long locationId) {
 
-        return this.locationRepository.findById(locationId);
+        Optional<Location> location = this.locationRepository.findById(locationId);
+        if (!location.isPresent()) {
+            return new ResponseEntity(new CustomErrorType("Location with id " + locationId
+                    + " not found"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Optional<Location>>(location, HttpStatus.OK);
     }
 
+    // -------------------Create a Location --------------------------------------------------
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public ResponseEntity<?> createLocation(@RequestBody Location location, UriComponentsBuilder ucBuilder) {
+
+        if (locationRepository.existsByName(location.getName())) {
+            return new ResponseEntity(new CustomErrorType("Unable to create. A Location with name " +
+                    location.getName() + " already exist."),HttpStatus.CONFLICT);
+        }
+        locationRepository.save(location);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/locations/{id}").buildAndExpand(location.getId()).toUri());
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
+    // ------------------- Update a Location ------------------------------------------------
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
+
+        Optional<Location> currentLocation = locationRepository.findById(id);
+
+        if (!currentLocation.isPresent()) {
+            return new ResponseEntity(new CustomErrorType("Unable to upate. Location with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        currentLocation.get().setDescription(location.getDescription());
+        currentLocation.get().setCountryId(location.getCountryId());
+        currentLocation.get().setLatitude(location.getLatitude());
+        currentLocation.get().setLongitude(location.getLongitude());
+        currentLocation.get().setName(location.getName());
+        currentLocation.get().setPhotoUrl(location.getPhotoUrl());
+
+        locationRepository.save(currentLocation.get());
+        return new ResponseEntity<Optional<Location>>(currentLocation, HttpStatus.OK);
+    }
+
+    // ------------------- Delete a Location-----------------------------------------
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteLocation(@PathVariable("id") long id) {
+
+        Optional<Location> location = locationRepository.findById(id);
+        if (!location.isPresent()) {
+            return new ResponseEntity(new CustomErrorType("Unable to delete. Location with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+        locationRepository.deleteById(id);
+        return new ResponseEntity<Location>(HttpStatus.NO_CONTENT);
+    }
+// ------------------- Delete All Locations-----------------------------
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Location> deleteAllLocations() {
+
+        locationRepository.deleteAll();
+        return new ResponseEntity<Location>(HttpStatus.NO_CONTENT);
+    }
 
 }
+

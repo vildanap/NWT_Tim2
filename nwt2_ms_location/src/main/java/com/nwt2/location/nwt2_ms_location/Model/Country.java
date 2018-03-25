@@ -14,12 +14,11 @@ public class Country {
 
     private String name;
 
-
+    public Country(){} // JPA only
 
     public Country(String name) {
         this.name = name;
     }
-
 
     public String getName() {
         return name;
@@ -28,4 +27,8 @@ public class Country {
     public void setName(String name) {
         this.name = name;
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 }

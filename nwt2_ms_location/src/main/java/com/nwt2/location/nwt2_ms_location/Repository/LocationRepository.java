@@ -11,4 +11,5 @@ import java.util.Optional;
  * Created by Dragnic on 3/20/2018.
  */
 public interface LocationRepository extends JpaRepository<Location, Long> {
+    boolean existsByName(String name);
 }
