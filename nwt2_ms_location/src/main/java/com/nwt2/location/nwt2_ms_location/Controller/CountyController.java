@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +28,39 @@ public class CountyController {
     @Autowired
     public CountyController(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorDTO processValidationError(MethodArgumentNotValidException ex) {
+        BindingResult result = ex.getBindingResult();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+
+        return processFieldErrors(fieldErrors);
+    }
+
+    private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors) {
+        ValidationErrorDTO dto = new ValidationErrorDTO();
+
+        for (FieldError fieldError: fieldErrors) {
+            String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
+            dto.addFieldError(fieldError.getField(), localizedErrorMessage);
+        }
+
+        return dto;
+    }
+
+    private String resolveLocalizedErrorMessage(FieldError fieldError) {
+
+
+        //If the message was not found, return the most accurate field error code instead.
+        //You can remove this check if you prefer to get the default error message.
+
+        String fieldErrorCodes = fieldError.getDefaultMessage();
+
+
+        return fieldErrorCodes;
     }
 
     // -------------------Retrieve All Countries---------------------------------------------
@@ -51,7 +88,7 @@ public class CountyController {
 
     // -------------------Create a Country --------------------------------------------------
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public ResponseEntity<?> createLocation(@RequestBody Country country, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createLocation(@Valid @RequestBody Country country, UriComponentsBuilder ucBuilder) {
 
         if (countryRepository.existsByName(country.getName())) {
             return new ResponseEntity(new CustomErrorType("Unable to create. A Country with name " +
@@ -67,7 +104,7 @@ public class CountyController {
     // ------------------- Update a Country ------------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateLocation(@PathVariable("id") long id, @RequestBody Country country) {
+    public ResponseEntity<?> updateLocation(@PathVariable("id") long id,@Valid @RequestBody Country country) {
 
         Optional<Country> currentCountry = countryRepository.findById(id);
 

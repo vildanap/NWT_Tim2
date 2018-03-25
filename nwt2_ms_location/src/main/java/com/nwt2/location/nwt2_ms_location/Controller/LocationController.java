@@ -3,13 +3,22 @@ package com.nwt2.location.nwt2_ms_location.Controller;
 import com.nwt2.location.nwt2_ms_location.Model.Location;
 import com.nwt2.location.nwt2_ms_location.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -24,6 +33,40 @@ public class LocationController {
     public LocationController(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ValidationErrorDTO processValidationError(MethodArgumentNotValidException ex) {
+        BindingResult result = ex.getBindingResult();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+
+        return processFieldErrors(fieldErrors);
+    }
+
+    private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors) {
+        ValidationErrorDTO dto = new ValidationErrorDTO();
+
+        for (FieldError fieldError: fieldErrors) {
+            String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
+            dto.addFieldError(fieldError.getField(), localizedErrorMessage);
+        }
+
+        return dto;
+    }
+
+    private String resolveLocalizedErrorMessage(FieldError fieldError) {
+
+
+        //If the message was not found, return the most accurate field error code instead.
+        //You can remove this check if you prefer to get the default error message.
+
+            String fieldErrorCodes = fieldError.getDefaultMessage();
+
+
+        return fieldErrorCodes;
+    }
+
     // -------------------Retrieve All Locations---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<List<Location>> listAllLocations() {
@@ -49,12 +92,13 @@ public class LocationController {
 
     // -------------------Create a Location --------------------------------------------------
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public ResponseEntity<?> createLocation(@RequestBody Location location, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<?> createLocation(@Valid @RequestBody Location location, UriComponentsBuilder ucBuilder) {
 
         if (locationRepository.existsByName(location.getName())) {
             return new ResponseEntity(new CustomErrorType("Unable to create. A Location with name " +
                     location.getName() + " already exist."),HttpStatus.CONFLICT);
         }
+
         locationRepository.save(location);
 
         HttpHeaders headers = new HttpHeaders();
@@ -65,12 +109,12 @@ public class LocationController {
     // ------------------- Update a Location ------------------------------------------------
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
+    public ResponseEntity<?> updateLocation(@PathVariable("id") long id, @Valid @RequestBody Location location) {
 
         Optional<Location> currentLocation = locationRepository.findById(id);
 
         if (!currentLocation.isPresent()) {
-            return new ResponseEntity(new CustomErrorType("Unable to upate. Location with id " + id + " not found."),
+            return new ResponseEntity(new CustomErrorType("Unable to update. Location with id " + id + " not found."),
                     HttpStatus.NOT_FOUND);
         }
 
