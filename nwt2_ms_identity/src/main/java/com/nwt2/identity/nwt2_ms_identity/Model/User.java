@@ -2,10 +2,7 @@ package com.nwt2.identity.nwt2_ms_identity.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class User {
@@ -25,6 +22,7 @@ public class User {
     private String username;
 
     @JsonIgnore
+    @Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})",flags={Pattern.Flag.CASE_INSENSITIVE}, message="Password must contain: at least one digit(0-9), lowercase character, uppercase character. Length: 6-15 characters!")
     private String password;
 
     @Email(message = "Email should be valid")

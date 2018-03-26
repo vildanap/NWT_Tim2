@@ -11,6 +11,8 @@ import java.util.Optional;
 @RepositoryRestResource(collectionResourceRel = "user", path = "users")
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(@Param("username") String username);
+    //User findByName(String name);
+
 
 }
 
