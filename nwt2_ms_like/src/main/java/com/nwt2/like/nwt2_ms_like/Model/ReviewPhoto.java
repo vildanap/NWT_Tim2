@@ -14,14 +14,14 @@ public class ReviewPhoto {
     private long id;
 
     // Foreign keys
-    @NotNull
-    private long reviewId;
+    @NotNull(message = "Review cannot be null")
+    private Integer reviewId;
 
-    @NotNull
-    private long photoId;
+    @NotNull(message = "Photo cannot be null")
+    private Integer photoId;
 
     // constructor
-    public ReviewPhoto(long ReviewId, long PhotoId) {
+    public ReviewPhoto(Integer ReviewId, Integer PhotoId) {
         this.reviewId=ReviewId;
         this.photoId=PhotoId;
     }
@@ -33,19 +33,19 @@ public class ReviewPhoto {
         return id;
     }
 
-    public long getReviewId() {
+    public Integer getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(long reviewId) {
+    public void setReviewId(Integer reviewId) {
         this.reviewId = reviewId;
     }
 
-    public long getPhotoId() {
+    public Integer getPhotoId() {
         return photoId;
     }
 
-    public void setPhotoId(long photoId) {
+    public void setPhotoId(Integer photoId) {
         this.photoId = photoId;
     }
 }

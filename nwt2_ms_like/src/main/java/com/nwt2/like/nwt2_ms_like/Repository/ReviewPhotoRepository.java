@@ -14,5 +14,5 @@ import java.util.List;
  * Created by amina on 3/20/2018.
  */
 public interface ReviewPhotoRepository extends JpaRepository<ReviewPhoto, Long> {
-  boolean existsByReviewIdAndPhotoId(Long reviewId, Long photoId);
+  boolean existsByReviewIdAndPhotoId(Integer reviewId, Integer photoId);
 }
