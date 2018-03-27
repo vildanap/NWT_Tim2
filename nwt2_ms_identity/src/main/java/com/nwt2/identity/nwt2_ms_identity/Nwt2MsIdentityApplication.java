@@ -40,7 +40,7 @@ public class Nwt2MsIdentityApplication {
 				//TEST : validacija - firstename, username i password nisu u ispravnom formatu
 				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 				Validator validator = factory.getValidator();
-				User u = new User("","Panjeta","vil","pass","vildanapanjeta",2);
+				User u = new User("","","vil","pass","vildanapanjeta",2);
 				Set<ConstraintViolation<User>> violations = validator.validate(u);
 				for (ConstraintViolation<User> violation : violations) {
 					System.out.println(String.format(

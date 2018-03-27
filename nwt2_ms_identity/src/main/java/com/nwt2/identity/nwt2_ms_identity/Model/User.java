@@ -28,6 +28,14 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     //FK
     private Integer roleId;
 
@@ -42,6 +50,15 @@ public class User {
         this.email = email;
         this.roleId = roleId;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }

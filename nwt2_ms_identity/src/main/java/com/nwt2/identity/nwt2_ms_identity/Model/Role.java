@@ -2,9 +2,11 @@ package com.nwt2.identity.nwt2_ms_identity.Model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Role {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_generator")
@@ -12,6 +14,7 @@ public class Role {
     private Long id;
 
     @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters")
     private String name;
 
     protected  Role() {}
@@ -34,5 +37,13 @@ public class Role {
         return String.format(
                 "Role[id=%d, name='%s']",
                 id, name);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
