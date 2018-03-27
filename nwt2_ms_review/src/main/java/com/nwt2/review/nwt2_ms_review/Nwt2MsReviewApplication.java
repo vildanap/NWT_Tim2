@@ -18,18 +18,4 @@ public class Nwt2MsReviewApplication {
 		SpringApplication.run(Nwt2MsReviewApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner demo(ReviewRepository repository, ReviewTypeRepository typeRepo) {
-		return (args) -> {
-			repository.save(new Review(10, 10, "This is a comment", 2));
-			repository.save(new Review(10, 10, "This is a comment", 2));
-			repository.save(new Review(10, 10, "This is a comment", 2));
-			repository.save(new Review(10, 10, "This is a comment", 2));
-
-			typeRepo.save(new ReviewType("Food"));
-			typeRepo.save(new ReviewType("Nightlife"));
-			typeRepo.save(new ReviewType("Culture"));
-			typeRepo.save(new ReviewType("Movies"));
-		};
-	}
 }

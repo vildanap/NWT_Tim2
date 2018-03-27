@@ -13,40 +13,45 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private Integer numberOfLikes;
     private Integer numberOfDislikes;
     private String comment;
     private Integer grade;
 
-    // Foreing keys
-    private Integer UserId;
-    private Integer CityId;
-    private Integer ReviewTypeId;
+    private Integer userId;
+    private Integer cityId;
+    private Integer reviewTypeId;
+
+    // Default constructor
+    public Review() {
+        this.numberOfLikes = 0;
+        this.numberOfDislikes = 0;
+    }
 
     // All included constructor
-    public Review(Integer likes, Integer dislikes, String comment, Integer grade, Integer ReviewTypeId, Integer CityId, Integer UserId) {
-        this.numberOfDislikes = dislikes;
-        this.numberOfLikes = likes;
+    public Review(String comment, Integer grade, Integer ReviewTypeId, Integer CityId, Integer UserId) {
+        this.numberOfDislikes = 0;
+        this.numberOfLikes = 0;
         this.comment = comment;
         this.grade = grade;
 
-        this.ReviewTypeId = ReviewTypeId;
-        this.CityId = CityId;
-        this.UserId = UserId;
+        this.reviewTypeId = ReviewTypeId;
+        this.cityId = CityId;
+        this.userId = UserId;
     }
 
     // Default value constructor
-    public Review(Integer likes, Integer dislikes, String comment, Integer grade) {
-        this.numberOfDislikes = dislikes;
-        this.numberOfLikes = likes;
+    public Review(String comment, Integer grade) {
+        this.numberOfDislikes = 0;
+        this.numberOfLikes = 0;
         this.comment = comment;
         this.grade = grade;
 
-        this.ReviewTypeId = 0;
-        this.CityId = 0;
-        this.UserId = 0;
+        this.reviewTypeId = 0;
+        this.cityId = 0;
+        this.userId = 0;
     }
 
     public Integer getNumberOfLikes() {
@@ -79,5 +84,29 @@ public class Review {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getReviewTypeId() {
+        return reviewTypeId;
+    }
+
+    public void setReviewTypeId(Integer reviewTypeId) {
+        this.reviewTypeId = reviewTypeId;
     }
 }
