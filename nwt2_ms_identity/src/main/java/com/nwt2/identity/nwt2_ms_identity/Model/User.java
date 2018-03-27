@@ -1,22 +1,31 @@
 package com.nwt2.identity.nwt2_ms_identity.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "identity_generator")
+    @SequenceGenerator(name="identity_generator", sequenceName = "identity_seq", allocationSize=1)
+    private Long id;
 
-
+    @NotEmpty(message="Firstname cannot be empty")
     private String firstName;
+    @NotEmpty(message="Lastname cannot be empty")
     private String lastName;
+
+    @NotEmpty(message="Username cannot be empty")
+    @Size(min=4, max=15, message = "Username must be between 4 and 15 characters")
     private String username;
+
+    @JsonIgnore
+    @Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})",flags={Pattern.Flag.CASE_INSENSITIVE}, message="Password must contain: at least one digit(0-9), lowercase character, uppercase character. Length: 6-15 characters!")
     private String password;
+
+    @Email(message = "Email should be valid")
     private String email;
 
     //FK

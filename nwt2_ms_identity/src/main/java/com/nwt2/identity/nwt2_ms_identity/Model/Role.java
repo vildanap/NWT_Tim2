@@ -1,16 +1,17 @@
 package com.nwt2.identity.nwt2_ms_identity.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_generator")
+    @SequenceGenerator(name="role_generator", sequenceName = "role_seq", allocationSize=1)
+    private Long id;
+
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     protected  Role() {}
