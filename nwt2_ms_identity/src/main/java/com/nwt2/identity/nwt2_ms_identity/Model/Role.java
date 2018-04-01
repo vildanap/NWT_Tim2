@@ -3,6 +3,8 @@ package com.nwt2.identity.nwt2_ms_identity.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Role {
@@ -16,6 +18,9 @@ public class Role {
     @NotEmpty(message = "Name cannot be empty")
     @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters")
     private String name;
+
+    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
+    private List<User> users =  new ArrayList<>();
 
     protected  Role() {}
 
@@ -45,5 +50,13 @@ public class Role {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

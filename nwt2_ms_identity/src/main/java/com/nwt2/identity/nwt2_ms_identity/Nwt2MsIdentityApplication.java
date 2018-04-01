@@ -29,18 +29,20 @@ public class Nwt2MsIdentityApplication {
 		public CommandLineRunner demo(RoleRepository role, UserRepository user){
 			return (args) -> {
 
-				role.save(new Role("admin"));
-				role.save(new Role("registeredUser"));
+				Role r1= new Role("admin");
+				Role r2= new Role("registeredUser");
+				role.save(r1);
+				role.save(r2);
 
-				user.save(new User("Vildana","Panjeta","vildanapanjeta","pass12A","vildanapanjeta@gmail.com",2));
-				user.save(new User("Zerina","Dragnic","zerinadragnic","pass12A","zerinadragnic@gmail.com",2));
-				user.save(new User("Amina","Puce","aminapuce","pass21A","aminapuce@gmail.com",2));
-				user.save(new User("Mirza","Ohranovic","mirzaohranovic","pass21A","mirzaohranovic@gmail.com",2));
+				user.save(new User("Vildana","Panjeta","vildanapanjeta","pass12A","vildanapanjeta@gmail.com",r2));
+				user.save(new User("Zerina","Dragnic","zerinadragnic","pass12A","zerinadragnic@gmail.com",r2));
+				user.save(new User("Amina","Puce","aminapuce","pass21A","aminapuce@gmail.com",r2));
+				user.save(new User("Mirza","Ohranovic","mirzaohranovic","pass21A","mirzaohranovic@gmail.com",r2));
 
 				//TEST : validacija - firstename, username i password nisu u ispravnom formatu
 				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 				Validator validator = factory.getValidator();
-				User u = new User("","","vil","pass","vildanapanjeta",2);
+				User u = new User("","","vil","pass","vildanapanjeta",r2);
 				Set<ConstraintViolation<User>> violations = validator.validate(u);
 				for (ConstraintViolation<User> violation : violations) {
 					System.out.println(String.format(
