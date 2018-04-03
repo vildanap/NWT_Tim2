@@ -73,7 +73,7 @@ class ReviewController {
         @return: ResponseEntity
      */
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<?> store(@ModelAttribute Review review) {
+    public ResponseEntity<?> store(@RequestBody Review review) {
         boolean error = false;
 
         JSONObject errors = new JSONObject();
@@ -120,7 +120,7 @@ class ReviewController {
         @return: ResponseEntity
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Long id, @ModelAttribute Review review) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Review review) {
         Optional<Review> selectedReview = reviewRepository.findById(id);
 
         if(!selectedReview.isPresent()) {

@@ -59,7 +59,7 @@ public class ReviewTypeController {
         @return: ResponseEntity
      */
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<?> store(@ModelAttribute ReviewType reviewType) {
+    public ResponseEntity<?> store(@RequestBody ReviewType reviewType) {
         boolean error = false;
 
         JSONObject errors = new JSONObject();
@@ -86,13 +86,29 @@ public class ReviewTypeController {
         @return: ResponseEntity
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Long id, @ModelAttribute ReviewType reviewType) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ReviewType reviewType) {
         Optional<ReviewType> selectedReviewType = reviewTypeRepository.findById(id);
 
         if(!selectedReviewType.isPresent()) {
             return new ResponseEntity<JSONObject>(
                     JSONExceptionHandler.getErrorObject("No entity with ID: " + id, HttpStatus.NOT_FOUND.value()),
                     HttpStatus.NOT_FOUND
+            );
+        }
+
+        boolean error = false;
+
+        JSONObject errors = new JSONObject();
+
+        if(reviewType.getName() == null) {
+            errors.put("error_name", "The name parameter is missing.");
+            error = true;
+        }
+
+        if(error) {
+            return new ResponseEntity<JSONObject>(
+                    JSONExceptionHandler.getErrorObject(errors, HttpStatus.BAD_REQUEST.value()),
+                    HttpStatus.BAD_REQUEST
             );
         }
 

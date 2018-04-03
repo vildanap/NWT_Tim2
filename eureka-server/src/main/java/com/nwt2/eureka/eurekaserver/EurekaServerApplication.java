@@ -1,5 +1,4 @@
-
-package org.exampledriven.eureka.customer.server;
+package com.nwt2.eureka.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
