@@ -7,9 +7,10 @@ import com.nwt2.location.nwt2_ms_location.Repository.LocationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
-
+@EnableDiscoveryClient
 @SpringBootApplication
 public class Nwt2MsLocationApplication {
 
