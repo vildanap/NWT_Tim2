@@ -64,6 +64,8 @@ class ReviewController {
             );
         }
 
+        Review review = selectedReview.get();
+
         return new ResponseEntity<Review>(selectedReview.get(), HttpStatus.OK);
     }
 

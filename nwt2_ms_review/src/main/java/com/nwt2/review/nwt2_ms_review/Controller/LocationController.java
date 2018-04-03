@@ -1,7 +1,7 @@
 package com.nwt2.review.nwt2_ms_review.Controller;
 
-import com.nwt2.review.nwt2_ms_review.Model.User;
-import com.nwt2.review.nwt2_ms_review.Repository.UserRepository;
+import com.nwt2.review.nwt2_ms_review.Model.Location;
+import com.nwt2.review.nwt2_ms_review.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class LocationController {
 
     @Autowired
-    private UserRepository userRepository;
+    private LocationRepository locationRepository;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<?> store(@RequestBody User user) {
-        this.userRepository.save(user);
-        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+    public ResponseEntity<?> store(@RequestBody Location location) {
+        this.locationRepository.save(location);
+        return new ResponseEntity<Location>(location, HttpStatus.CREATED);
     }
 }
