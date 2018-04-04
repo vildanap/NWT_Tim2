@@ -19,8 +19,8 @@ public class Role {
     @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters")
     private String name;
 
-    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
-    private List<User> users =  new ArrayList<>();
+   // @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
+   // private List<User> users =  new ArrayList<>();
 
     protected  Role() {}
 
@@ -52,11 +52,11 @@ public class Role {
         this.id = id;
     }
 
-    public List<User> getUsers() {
+  /*  public List<User> getUsers() {
         return users;
     }
 
     public void setUsers(List<User> users) {
         this.users = users;
     }
-}
+}*/}

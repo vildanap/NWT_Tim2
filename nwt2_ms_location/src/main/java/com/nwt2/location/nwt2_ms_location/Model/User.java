@@ -1,14 +1,14 @@
-package com.nwt2.review.nwt2_ms_review.Model;
+package com.nwt2.location.nwt2_ms_location.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-/**
- * Created by ohrinator on 4/3/18.
- */
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {

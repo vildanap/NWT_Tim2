@@ -19,10 +19,12 @@ public class LocationController {
 
     @Autowired
     private LocationRepository locationRepository;
-
+/*
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public ResponseEntity<?> store(@RequestBody Location location) {
         this.locationRepository.save(location);
         return new ResponseEntity<Location>(location, HttpStatus.CREATED);
     }
+
+    */
 }

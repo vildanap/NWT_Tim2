@@ -28,20 +28,30 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+   /* @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId", referencedColumnName = "id", nullable = false)
     private Role role;
+*/
+   public Long getRoleId() {
+       return roleId;
+   }
 
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    //FK
+    private Long roleId;
 
     protected User() {}
 
-    public User(String firstName,String lastName,String username,String password,String email,Role role){
+    public User(String firstName,String lastName,String username,String password,String email,Long role){
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.roleId = role;
     }
 
     public Long getId() {
@@ -91,7 +101,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
+/*
     public Role getRole() {
         return role;
     }
@@ -99,7 +109,7 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
+*/
     @Override
     public String toString() {
         return String.format(

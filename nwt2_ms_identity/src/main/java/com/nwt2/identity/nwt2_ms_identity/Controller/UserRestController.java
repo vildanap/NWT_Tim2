@@ -1,30 +1,44 @@
 package com.nwt2.identity.nwt2_ms_identity.Controller;
 
 import com.nwt2.identity.nwt2_ms_identity.Model.User;
-import com.nwt2.identity.nwt2_ms_identity.Repository.UserRepository;
+import com.nwt2.identity.nwt2_ms_identity.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
+
+@RefreshScope
 @RequestMapping("/users")
 public class UserRestController {
 
-    private final UserRepository userRepository;
+  /*  private final UserRepository userRepository;
 
-    @Autowired
+
+  @Autowired
     public UserRestController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+*/
+  @Autowired
+  private UsersService usersService;
+
+   /* @RequestMapping("/find/{id}")
+    public Optional<User> findById(@PathVariable Long id){
+        return usersService.findById(id);
+    }
+
+    @RequestMapping("/all")
+    public Collection<User> findAll(){
+        return usersService.findAll();
+    }
+
+  /*
 
     // -------------------Retrieve All Users---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -36,11 +50,11 @@ public class UserRestController {
         }
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
-
+*/
     // -------------------Retrieve One User---------------------------------------------
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    public  ResponseEntity<?> readUser(@PathVariable Long userId) {
-        Optional<User> user = this.userRepository.findById(userId);
+    @RequestMapping(method = RequestMethod.GET, value = "/find/{userId}")
+    public ResponseEntity<?> readUser(@PathVariable Long userId) {
+        Optional<User> user = this.usersService.findById(userId);
         if (!user.isPresent()) {
             return new ResponseEntity(new CustomErrorType("User with id " + userId + " not found."),
                     HttpStatus.NOT_FOUND);
@@ -48,7 +62,7 @@ public class UserRestController {
         return new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
     }
 
-
+/*
 
     // CREATE
 
@@ -98,6 +112,7 @@ public class UserRestController {
         }
         this.userRepository.deleteById(userId);
         return new ResponseEntity(HttpStatus.OK);
-    }
+    }*/
+
 
 }
