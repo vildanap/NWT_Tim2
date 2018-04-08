@@ -1,6 +1,9 @@
 package com.nwt2.location.nwt2_ms_location.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,6 +13,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
 
     @Id
@@ -94,6 +98,13 @@ public class Location {
 
     public void setCountryId(Integer countryId) {
         CountryId = countryId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Location[id=%d, name='%s']",
+                id, name);
     }
 
 }

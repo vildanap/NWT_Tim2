@@ -1,5 +1,7 @@
 package com.nwt2.review.nwt2_ms_review.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,6 +10,7 @@ import javax.validation.constraints.Size;
  * Created by ohrinator on 4/3/18.
  */
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
     @Id
     private Long id;
