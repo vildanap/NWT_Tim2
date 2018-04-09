@@ -33,9 +33,10 @@ public class Nwt2MsLocationApplication {
             country.save(new Country("Germany"));
             country.save(new Country("Spain"));
             country.save(new Country("France"));
-            country.save(new Country("Bosnia and Herzegovina"));
+            Country c = new Country("Bosnia and Herzegovina");
+            country.save(c);
 
-            location.save(new Location("/resources/images/logo.jpg", "Berlin", "Description.", (float) 48.864716, (float) 2.349014, 1));
+            location.save(new Location("/resources/images/logo.jpg", "Berlin", "Description.", (float) 48.864716, (float) 2.349014, c));
 
 
         };

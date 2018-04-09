@@ -119,7 +119,7 @@ public class LocationController {
         }
 
         currentLocation.get().setDescription(location.getDescription());
-        currentLocation.get().setCountryId(location.getCountryId());
+        currentLocation.get().setCountry(location.getCountry());
         currentLocation.get().setLatitude(location.getLatitude());
         currentLocation.get().setLongitude(location.getLongitude());
         currentLocation.get().setName(location.getName());

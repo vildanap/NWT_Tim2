@@ -1,8 +1,10 @@
 package com.nwt2.location.nwt2_ms_location.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,7 +15,8 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Location.class)
+
 public class Location {
 
     @Id
@@ -35,17 +38,20 @@ public class Location {
 
 
     // Foreing keys
-    @NotNull(message = "Country cannot be null")
-    private Integer CountryId;
+    //@NotNull(message = "Country cannot be null")
+    @JoinColumn(name = "country_id")
+    @ManyToOne
+
+    private Country country;
 
     // All included constructor
-    public Location(String photoUrl, String name, String description, float latitude, float longitude, Integer countryId) {
+    public Location(String photoUrl, String name, String description, float latitude, float longitude, Country countryId) {
         this.photoUrl = photoUrl;
         this.name = name;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
-        CountryId = countryId;
+        country = countryId;
     }
 
     private Location() { } // JPA only
@@ -92,12 +98,12 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public Integer getCountryId() {
-        return CountryId;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCountryId(Integer countryId) {
-        CountryId = countryId;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     @Override
