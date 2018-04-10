@@ -1,6 +1,7 @@
 package com.nwt2.identity.nwt2_ms_identity.Controller;
 
 import com.nwt2.identity.nwt2_ms_identity.Model.User;
+import com.nwt2.identity.nwt2_ms_identity.Services.UserEventHandler;
 import com.nwt2.identity.nwt2_ms_identity.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -29,6 +30,11 @@ public class UserRestController {
         this.userRepository = userRepository;
     }
 */
+
+  //da saljemo poruku
+  @Autowired
+  private UserEventHandler eh;
+
   @Autowired
   private UsersService usersService;
 
@@ -78,7 +84,7 @@ public class UserRestController {
                     user.getUsername() + " already exist."), HttpStatus.CONFLICT);
         }
         usersService.saveUser(user);
-
+        eh.handleUserSave(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);

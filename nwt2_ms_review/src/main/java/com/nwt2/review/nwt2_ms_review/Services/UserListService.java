@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-
-@Component
+@Service
 public class UserListService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private UserRepository userRepository;

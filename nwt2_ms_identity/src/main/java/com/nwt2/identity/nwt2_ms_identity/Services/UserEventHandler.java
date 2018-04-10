@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 
-import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 
+import org.springframework.data.rest.core.annotation.HandleAfterSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 
 import org.springframework.stereotype.Component;
@@ -52,11 +52,11 @@ public class UserEventHandler {
     }
 
 
-    @HandleAfterCreate
-
+    @HandleAfterSave
     public void handleUserSave(User user) {
 
         sendMessage(user);
+        logger.info("Kreiran user", user);
 
     }
 
