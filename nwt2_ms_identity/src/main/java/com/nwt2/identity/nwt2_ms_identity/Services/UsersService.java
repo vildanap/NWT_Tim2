@@ -5,6 +5,7 @@ import com.nwt2.identity.nwt2_ms_identity.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -21,6 +22,17 @@ public class UsersService {
         return userRepository.findAll();
     }
 
+    public void deleteById(Long id)
+    {
+        userRepository.deleteById(id);
+    }
 
 
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public void saveUser(@Valid User user) {
+        userRepository.save(user);
+    }
 }

@@ -44,21 +44,22 @@ public class Nwt2MsIdentityApplication {
 				role.save(r1);
 				role.save(r2);
 
-				user.save(new User("Vildana","Panjeta","vildanapanjeta","pass12A","vildanapanjeta@gmail.com",(long) 2));
-				user.save(new User("Zerina","Dragnic","zerinadragnic","pass12A","zerinadragnic@gmail.com",(long)2));
-				user.save(new User("Amina","Puce","aminapuce","pass21A","aminapuce@gmail.com",(long)2));
-				user.save(new User("Mirza","Ohranovic","mirzaohranovic","pass21A","mirzaohranovic@gmail.com",(long)2));
+				user.save(new User("Vildana","Panjeta","vildanapanjeta","pass12A","vildanapanjeta@gmail.com",r2));
+				user.save(new User("Zerina","Dragnic","zerinadragnic","pass12A","zerinadragnic@gmail.com",r2));
+				user.save(new User("Amina","Puce","aminapuce","pass21A","aminapuce@gmail.com",r2));
+				user.save(new User("Mirza","Ohranovic","mirzaohranovic","pass21A","mirzaohranovic@gmail.com",r2));
 
 				//TEST : validacija - firstename, username i password nisu u ispravnom formatu
 				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 				Validator validator = factory.getValidator();
-				User u = new User("","","vil","pass","vildanapanjeta",(long)2);
+				User u = new User("","","vil","pass","vildanapanjeta",r2);
 				Set<ConstraintViolation<User>> violations = validator.validate(u);
 				for (ConstraintViolation<User> violation : violations) {
 					System.out.println(String.format(
                             "Error here! property: [%s], value: [%s], message: [%s]",
                             violation.getPropertyPath(), violation.getInvalidValue(), violation.getMessage()));
 				}
+
 			};
 		}
 	@Bean

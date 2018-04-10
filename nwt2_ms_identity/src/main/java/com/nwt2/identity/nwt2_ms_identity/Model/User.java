@@ -1,10 +1,13 @@
 package com.nwt2.identity.nwt2_ms_identity.Model;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = User.class)
 public class User {
 
     @Id
@@ -28,30 +31,41 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @JoinColumn(name = "role_id")
+    @ManyToOne
+    private Role role;
    /* @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId", referencedColumnName = "id", nullable = false)
     private Role role;
 */
-   public Long getRoleId() {
+  /* public Long getRoleId() {
        return roleId;
    }
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
-
+*/
     //FK
-    private Long roleId;
+  //  private Long roleId;
 
     protected User() {}
 
-    public User(String firstName,String lastName,String username,String password,String email,Long role){
+    public User(String firstName,String lastName,String username,String password,String email,Role role){
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.roleId = role;
+        this.role = role;
     }
 
     public Long getId() {
