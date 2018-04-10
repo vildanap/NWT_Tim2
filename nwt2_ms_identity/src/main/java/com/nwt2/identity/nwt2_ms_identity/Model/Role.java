@@ -1,6 +1,7 @@
 package com.nwt2.identity.nwt2_ms_identity.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = Role.class)
 public class Role {
 
 
@@ -27,7 +27,7 @@ public class Role {
    // @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
    // private List<User> users =  new ArrayList<>();
    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-
+    @JsonIgnore
    private Set<User> users;
     protected  Role() {}
 
