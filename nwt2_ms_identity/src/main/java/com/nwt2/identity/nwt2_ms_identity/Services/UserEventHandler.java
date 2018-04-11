@@ -55,6 +55,7 @@ public class UserEventHandler {
     @HandleAfterSave
     public void handleUserSave(User user) {
 
+
         sendMessage(user);
         logger.info("Kreiran user", user);
 
@@ -63,7 +64,7 @@ public class UserEventHandler {
 
 
     private void sendMessage(User user) {
-
+        logger.info(serializeToJson(user));
         rabbitTemplate.convertAndSend(
 
                 candidateCreatedQueue.getName(), serializeToJson(user));
