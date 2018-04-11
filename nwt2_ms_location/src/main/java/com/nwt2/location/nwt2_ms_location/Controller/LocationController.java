@@ -130,6 +130,7 @@ public class LocationController {
         currentLocation.get().setPhotoUrl(location.getPhotoUrl());
 
         locationRepository.save(currentLocation.get());
+        eh.handleLocationUpdate(currentLocation.get());
         return new ResponseEntity<Optional<Location>>(currentLocation, HttpStatus.OK);
     }
 
@@ -144,6 +145,7 @@ public class LocationController {
                     HttpStatus.NOT_FOUND);
         }
         locationRepository.deleteById(id);
+        eh.handleAfterDeleted(location.get());
         return new ResponseEntity<Location>(HttpStatus.NO_CONTENT);
     }
 // ------------------- Delete All Locations-----------------------------
