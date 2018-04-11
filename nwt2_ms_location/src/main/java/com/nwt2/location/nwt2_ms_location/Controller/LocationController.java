@@ -1,5 +1,6 @@
 package com.nwt2.location.nwt2_ms_location.Controller;
 
+import com.nwt2.location.nwt2_ms_location.Configuration.LocationEventHandler;
 import com.nwt2.location.nwt2_ms_location.Model.Location;
 import com.nwt2.location.nwt2_ms_location.Repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ import java.util.Optional;
 @RequestMapping("/locations")
 public class LocationController {
     private final LocationRepository locationRepository;
+    @Autowired
+    private LocationEventHandler eh;
 
     @Autowired
     public LocationController(LocationRepository locationRepository) {
@@ -100,6 +103,7 @@ public class LocationController {
         }
 
         locationRepository.save(location);
+        eh.handleLocationSave(location);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/locations/{id}").buildAndExpand(location.getId()).toUri());

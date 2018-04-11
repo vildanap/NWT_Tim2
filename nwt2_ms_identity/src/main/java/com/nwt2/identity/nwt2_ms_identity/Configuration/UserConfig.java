@@ -17,11 +17,9 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-
 public class UserConfig {
 
     @Bean
-
     public Queue candidateCreatedQueue() {
 
         return new Queue("candidate_created_queue");

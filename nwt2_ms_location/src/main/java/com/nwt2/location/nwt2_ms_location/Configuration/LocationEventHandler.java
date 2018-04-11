@@ -1,76 +1,60 @@
-package com.nwt2.identity.nwt2_ms_identity.Services;
+package com.nwt2.location.nwt2_ms_location.Configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.nwt2.identity.nwt2_ms_identity.Model.Role;
-import com.nwt2.identity.nwt2_ms_identity.Model.User;
-
-import com.nwt2.identity.nwt2_ms_identity.Repository.RoleRepository;
-import com.nwt2.identity.nwt2_ms_identity.Repository.UserRepository;
+import com.nwt2.location.nwt2_ms_location.Model.Location;
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
-
 import org.springframework.amqp.core.Queue;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.rest.core.annotation.HandleAfterCreate;
-
+import org.springframework.stereotype.Component;
 import org.springframework.data.rest.core.annotation.HandleAfterSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 
-import org.springframework.stereotype.Component;
-
 @Component
 @RepositoryEventHandler
-public class UserEventHandler {
-
-
+public class LocationEventHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private RabbitTemplate rabbitTemplate;
 
-    private Queue candidateCreatedQueue;
+    private Queue locationCreatedQueue;
 
 
 
     @Autowired
 
-    public UserEventHandler(RabbitTemplate rabbitTemplate, Queue userQueue) {
+    public LocationEventHandler(RabbitTemplate rabbitTemplate, Queue locationQueue) {
 
         this.rabbitTemplate = rabbitTemplate;
 
-        this.candidateCreatedQueue = userQueue;
+        this.locationCreatedQueue = locationQueue;
 
     }
 
 
     @HandleAfterSave
-    public void handleUserSave(User user) {
+    public void handleLocationSave(Location location) {
 
-        sendMessage(user);
-        logger.info("Kreiran user", user);
+        sendMessage(location);
+        logger.info("Kreirana lokacija", location);
 
     }
 
 
 
-    private void sendMessage(User user) {
+    private void sendMessage(Location location) {
 
         rabbitTemplate.convertAndSend(
 
-                candidateCreatedQueue.getName(), serializeToJson(user));
+                locationCreatedQueue.getName(), serializeToJson(location));
 
     }
 
 
 
-    private String serializeToJson(User user) {
+    private String serializeToJson(Location location) {
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -80,7 +64,7 @@ public class UserEventHandler {
 
         try {
 
-            jsonInString = mapper.writeValueAsString(user);
+            jsonInString = mapper.writeValueAsString(location);
 
         } catch (JsonProcessingException e) {
 
@@ -96,7 +80,4 @@ public class UserEventHandler {
         return jsonInString;
 
     }
-
-
-
 }

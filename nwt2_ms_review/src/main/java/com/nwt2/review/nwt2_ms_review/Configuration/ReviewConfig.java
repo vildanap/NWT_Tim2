@@ -23,6 +23,14 @@ public class ReviewConfig {
 
     }
 
+    @Bean
+
+    public Queue locationCreatedQueue() {
+
+        return new Queue("location_created_queue");
+
+    }
+
 
 
 
