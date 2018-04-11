@@ -1,6 +1,7 @@
 package com.nwt2.like.nwt2_ms_like.Controller;
 
 import com.nwt2.like.nwt2_ms_like.Model.ReviewPhoto;
+import com.nwt2.like.nwt2_ms_like.Repository.PhotoRepository;
 import com.nwt2.like.nwt2_ms_like.Repository.ReviewPhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,10 +21,12 @@ import java.util.Optional;
 @RequestMapping("/reviewphotos")
 public class ReviewPhotoController {
     private final ReviewPhotoRepository reviewPhotoRepository;
+    private final PhotoRepository photoRepository;
 
     @Autowired
-    public ReviewPhotoController(ReviewPhotoRepository reviewPhotoRepository) {
+    public ReviewPhotoController(ReviewPhotoRepository reviewPhotoRepository, PhotoRepository photoRepository) {
         this.reviewPhotoRepository = reviewPhotoRepository;
+        this.photoRepository = photoRepository;
     }
 
     // ------------------- Get all review photos ----------------------------------------
@@ -45,6 +48,27 @@ public class ReviewPhotoController {
                     HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Optional<ReviewPhoto>>(reviewPhoto, HttpStatus.OK);
+    }
+
+    // ------------------- Get all photos for specific review ----------------------------------------
+    @RequestMapping(method = RequestMethod.GET, value = "/review/{reviewId}")
+    public ResponseEntity<Collection<ReviewPhoto>> readPhotosByReview(@PathVariable Long reviewId) {
+        Collection<ReviewPhoto> reviewPhotos = this.reviewPhotoRepository.findAllByReviewId(reviewId);
+        if(reviewPhotos.isEmpty()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Collection<ReviewPhoto>>(reviewPhotos, HttpStatus.OK);
+    }
+
+    // ------------------- Get all photo urls for specific review as an array -------------------------
+    @RequestMapping(method = RequestMethod.GET, value = "/review/{reviewId}/urls")
+    public ResponseEntity<Collection<String>> readPhotoUrlsByReview(@PathVariable Long reviewId) {
+        Collection<ReviewPhoto> reviewPhotos = this.reviewPhotoRepository.findAllByReviewId(reviewId);
+        Collection<String> photoUrls = this.photoRepository.findAllUrls(reviewPhotos);
+        if(photoUrls.isEmpty()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Collection<String>>(photoUrls, HttpStatus.OK);
     }
 
     // ------------------- Create a review photo ----------------------------------------
