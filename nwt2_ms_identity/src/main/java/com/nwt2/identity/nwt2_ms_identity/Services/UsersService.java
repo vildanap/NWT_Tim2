@@ -16,9 +16,6 @@ public class UsersService {
     @Autowired
     private UserRepository userRepository;
 
-
-
-
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }

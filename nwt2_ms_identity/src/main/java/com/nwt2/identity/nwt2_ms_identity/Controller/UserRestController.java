@@ -22,33 +22,12 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserRestController {
 
-  /*  private final UserRepository userRepository;
-
-
-  @Autowired
-    public UserRestController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-*/
-
-  //da saljemo poruku
   @Autowired
   private UserEventHandler eh;
 
   @Autowired
   private UsersService usersService;
 
-   /* @RequestMapping("/find/{id}")
-    public Optional<User> findById(@PathVariable Long id){
-        return usersService.findById(id);
-    }
-
-    @RequestMapping("/all")
-    public Collection<User> findAll(){
-        return usersService.findAll();
-    }
-
-  */
 
     // -------------------Retrieve All Users---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/all")
@@ -121,8 +100,9 @@ public class UserRestController {
             return new ResponseEntity(new CustomErrorType("Unable to delete. User with id " + userId + " not found."),
                     HttpStatus.NOT_FOUND);
         }
+
         this.usersService.deleteById(userId);
-        //eh.handleAfterDeleted(user.get());
+        eh.handleAfterDeleted(user.get());
         return new ResponseEntity(HttpStatus.OK);
     }
 

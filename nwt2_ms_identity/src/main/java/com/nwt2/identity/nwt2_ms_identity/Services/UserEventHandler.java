@@ -60,7 +60,7 @@ public class UserEventHandler {
         rabbitTemplate.convertAndSend(
 
                 userCreatedQueue.getName(), serializeToJson(user));
-        logger.info("Kreiran user", user);
+        logger.info("User created", user);
     }
 
     @HandleAfterSave
@@ -69,7 +69,7 @@ public class UserEventHandler {
         rabbitTemplate.convertAndSend(
 
                 userUpdatedQueue.getName(), serializeToJson(user));
-        logger.info("Update user", user);
+        logger.info("Updated user", user);
 
     }
 
@@ -79,7 +79,7 @@ public class UserEventHandler {
         rabbitTemplate.convertAndSend(
 
                 userDeletedQueue.getName(), serializeToJson(user));
-        logger.info("Izbrisan user", user);
+        logger.info("Deleted user", user);
 
     }
 
