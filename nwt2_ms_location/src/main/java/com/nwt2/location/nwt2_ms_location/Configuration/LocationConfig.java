@@ -9,9 +9,23 @@ import org.springframework.amqp.core.Queue;
 
 public class LocationConfig {
     @Bean
-    public Queue locaitonCreatedQueue() {
+    public Queue locationCreatedQueue() {
 
         return new Queue("location_created_queue");
+
+    }
+
+    @Bean
+    public Queue locationUpdatedQueue() {
+
+        return new Queue("location_updated_queue");
+
+    }
+
+    @Bean
+    public Queue locationDeletedQueue() {
+
+        return new Queue("location_deleted_queue");
 
     }
 
