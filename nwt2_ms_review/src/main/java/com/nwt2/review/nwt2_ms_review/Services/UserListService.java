@@ -22,7 +22,7 @@ public class UserListService {
     private UserRepository userRepository;
 
 
-    @RabbitListener(queues = "#{candidateCreatedQueue.name}")
+    @RabbitListener(queues = "#{userCreatedQueue.name}")
 
     public void getCandidateMessage(String userCreatedMessage) {
         logger.info(userCreatedMessage);

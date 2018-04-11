@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 
+import org.springframework.data.rest.core.annotation.HandleAfterDelete;
 import org.springframework.data.rest.core.annotation.HandleAfterSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 
@@ -35,40 +36,61 @@ public class UserEventHandler {
 
     private RabbitTemplate rabbitTemplate;
 
-    private Queue candidateCreatedQueue;
+    private Queue userCreatedQueue;
 
+    private Queue userUpdatedQueue;
+
+    private Queue userDeletedQueue;
 
 
     @Autowired
 
-    public UserEventHandler(RabbitTemplate rabbitTemplate, Queue userQueue) {
+    public UserEventHandler(RabbitTemplate rabbitTemplate, Queue userCreatedQueue, Queue userUpdatedQueue, Queue userDeletedQueue ) {
 
         this.rabbitTemplate = rabbitTemplate;
-
-        this.candidateCreatedQueue = userQueue;
+        this.userCreatedQueue = userCreatedQueue;
+        this.userUpdatedQueue = userUpdatedQueue;
+        this.userDeletedQueue = userDeletedQueue;
 
     }
 
+    @HandleAfterCreate
+    public void handleAfterCreated(User user) {
+
+        rabbitTemplate.convertAndSend(
+
+                userCreatedQueue.getName(), serializeToJson(user));
+        logger.info("Kreiran user", user);
+    }
 
     @HandleAfterSave
     public void handleUserSave(User user) {
 
-        sendMessage(user);
-        logger.info("Kreiran user", user);
+        rabbitTemplate.convertAndSend(
+
+                userUpdatedQueue.getName(), serializeToJson(user));
+        logger.info("Update user", user);
 
     }
 
+    @HandleAfterDelete
+    public void handleAfterDeleted(User user) {
+
+        rabbitTemplate.convertAndSend(
+
+                userDeletedQueue.getName(), serializeToJson(user));
+        logger.info("Izbrisan user", user);
+
+    }
 
 
     private void sendMessage(User user) {
 
         rabbitTemplate.convertAndSend(
 
-                candidateCreatedQueue.getName(), serializeToJson(user));
+                userCreatedQueue.getName(), serializeToJson(user));
 
     }
-
-
 
     private String serializeToJson(User user) {
 

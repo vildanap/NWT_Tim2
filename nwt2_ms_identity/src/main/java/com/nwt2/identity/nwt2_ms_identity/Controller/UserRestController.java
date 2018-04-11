@@ -84,7 +84,7 @@ public class UserRestController {
                     user.getUsername() + " already exist."), HttpStatus.CONFLICT);
         }
         usersService.saveUser(user);
-        eh.handleUserSave(user);
+        eh.handleAfterCreated(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
@@ -109,6 +109,7 @@ public class UserRestController {
      userAccount.get().setUsername(user.getUsername());
 
         this.usersService.saveUser(userAccount.get());
+        eh.handleUserSave(userAccount.get());
         return new ResponseEntity<Optional<User>>(userAccount, HttpStatus.OK);
     }
 
@@ -121,6 +122,7 @@ public class UserRestController {
                     HttpStatus.NOT_FOUND);
         }
         this.usersService.deleteById(userId);
+        //eh.handleAfterDeleted(user.get());
         return new ResponseEntity(HttpStatus.OK);
     }
 

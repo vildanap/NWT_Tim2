@@ -20,9 +20,25 @@ import org.springframework.context.annotation.Configuration;
 public class UserConfig {
 
     @Bean
-    public Queue candidateCreatedQueue() {
+    public Queue userCreatedQueue() {
 
-        return new Queue("candidate_created_queue");
+        return new Queue("user_created_queue");
+
+    }
+
+    @Bean
+
+    public Queue userUpdatedQueue() {
+
+        return new Queue("user_updated_queue");
+
+    }
+
+    @Bean
+
+    public Queue userDeletedQueue() {
+
+        return new Queue("user_deleted_queue");
 
     }
 
