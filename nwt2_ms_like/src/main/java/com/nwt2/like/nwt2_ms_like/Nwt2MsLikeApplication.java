@@ -21,13 +21,13 @@ public class Nwt2MsLikeApplication {
 	@Bean
 	public CommandLineRunner demo(PhotoRepository photoRepository, ReviewPhotoRepository reviewPhotoRepository) {
 		return (args) -> {
-			//photoRepository.save(new Photo("https://cdn.pixabay.com/photo/2016/01/19/18/00/city-1150026_960_720.jpg"));
-			//photoRepository.save(new Photo("https://www.liveandinvestoverseas.com/wp-content/uploads/2015/03/urban-407693_1280.jpg"));
-			//photoRepository.save(new Photo("https://s3-media3.fl.yelpcdn.com/bphoto/Js5QOEvLhCh6tRxNkkVdKw/348s.jpg"));
+			photoRepository.save(new Photo("https://cdn.pixabay.com/photo/2016/01/19/18/00/city-1150026_960_720.jpg"));
+			photoRepository.save(new Photo("https://www.liveandinvestoverseas.com/wp-content/uploads/2015/03/urban-407693_1280.jpg"));
+			photoRepository.save(new Photo("https://s3-media3.fl.yelpcdn.com/bphoto/Js5QOEvLhCh6tRxNkkVdKw/348s.jpg"));
 
-			//reviewPhotoRepository.save(new ReviewPhoto(1,1));
-			//reviewPhotoRepository.save(new ReviewPhoto(1,2));
-			//reviewPhotoRepository.save(new ReviewPhoto(2,3));
+			reviewPhotoRepository.save(new ReviewPhoto(new Long(1), new Long(1)));
+			reviewPhotoRepository.save(new ReviewPhoto(new Long(1), new Long(2)));
+			reviewPhotoRepository.save(new ReviewPhoto(new Long(2) ,new Long(3)));
 		};
 	}
 }

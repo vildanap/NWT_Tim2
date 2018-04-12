@@ -1,17 +1,25 @@
 package com.nwt2.review.nwt2_ms_review.Controller;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
 import com.nwt2.review.nwt2_ms_review.ExceptionHandler.JSONExceptionHandler;
 import com.nwt2.review.nwt2_ms_review.Model.Review;
 import com.nwt2.review.nwt2_ms_review.Repository.ReviewRepository;
+import com.nwt2.review.nwt2_ms_review.Services.PhotoEventHandler;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +31,9 @@ class ReviewController {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private PhotoEventHandler photoEventHandler;
 
     /*
         Get all reviews
@@ -112,9 +123,24 @@ class ReviewController {
             );
         }
 
+
+        // List of images
+        List<String> images = review.getImages();
+
+        // Save the review
         this.reviewRepository.save(review);
+
+        // Fetch the reveiw ID
+        Long id = review.getId();
+
+        // Communicate the images to the MS controller
+        for(String image : images) {
+            photoEventHandler.handleAfterCreated(image, id);
+        }
+
         return new ResponseEntity<Review>(review, HttpStatus.CREATED);
     }
+
 
     /*
         Update review

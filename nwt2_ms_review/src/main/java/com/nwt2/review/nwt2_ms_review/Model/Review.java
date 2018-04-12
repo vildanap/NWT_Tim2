@@ -1,9 +1,7 @@
 package com.nwt2.review.nwt2_ms_review.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by ohrinator on 3/20/18.
@@ -23,6 +21,9 @@ public class Review {
     private Integer userId;
     private Integer cityId;
     private Integer reviewTypeId;
+
+    @Transient
+    private List<String> images;
 
     // Default constructor
     public Review() {
@@ -108,5 +109,21 @@ public class Review {
 
     public void setReviewTypeId(Integer reviewTypeId) {
         this.reviewTypeId = reviewTypeId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }
