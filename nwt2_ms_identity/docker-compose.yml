@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+ eurekaserver:
+  image: springio/eureka-server:latest
+  ports:
+   - "9090:8761"
+  networks:
+   - network
+
+ usermodule:
+  image: springio/nwt2_ms_identity:latest
+  depends_on:
+   - mysql
+   - eurekaserver
+  ports:
+   - "5555:8080"
+  environment:
+
+   SPRING_DATASOURCE_URL: 'jdbc:mysql://mysql:3306/nwt2_identity'
+   SPRING_APPLICATION_NAME: nwt2_ms_identity-service-client
+   SPRING_PROFILES_ACTIVE: enableEureka
+   EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:9090/eureka/
+  networks:
+   - network
+ mysql:
+  image: mysql:5.6
+  environment:
+   - MYSQL_ROOT_PASSWORD=1234
+   - MYSQL_DATABASE=nwt2_identity
+  ports:
+   - 3333:3306
+  networks:
+   - network
+
+networks:
+ network:
+  driver: bridge
