@@ -1,3 +1,6 @@
+/* Import */
+import axios from 'axios'
+
 /* Initialize the API configuration */
 import apiconfig from './config';
 
@@ -16,19 +19,15 @@ import apiconfig from './config';
  * @param {array} headers 
  *  setting up headers of the call (e.g. Authorization heades if needed)
  */
-export const sendRequest = (endpoint, data = {}, method = "GET", headers = {}) => {
+export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
   // Configure the request options
   let options = {
     method,
     headers,
     data,
-    url: apiconfig.url + endpoint
+    url: apiconfig.url + endpoint,
   }
 
   // Return axios promise
-  return fetch((options.url), {
-    method: options.method,
-    headers: options.headers,
-    data: options.data
-  })
+  return axios(options);
 }

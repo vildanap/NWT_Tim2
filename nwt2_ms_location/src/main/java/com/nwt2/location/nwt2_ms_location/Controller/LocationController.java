@@ -25,6 +25,7 @@ import java.util.Optional;
 /**
  * Created by Dragnic on 3/23/2018.
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/locations")
 public class LocationController {
