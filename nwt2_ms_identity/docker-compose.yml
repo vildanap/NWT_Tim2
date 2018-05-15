@@ -12,24 +12,111 @@ services:
    - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
    - EUREKA_CLIENT_FETCH_REGISTRY=false
 
+ gateway:
+  image: springio/zuulservice:latest
+  depends_on:
+   - eurekaserver
+  ports:
+   - "5554:8084"
+  environment:
+   - SPRING_APPLICATION_NAME =APIGateway
+   - SPRING_PROFILES_ACTIVE=enableEureka
+   - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+   - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+  networks:
+   - network
+
  usermodule:
   image: springio/nwt2_ms_identity:latest
   depends_on:
-   - mysql
+   - mysql-identity
    - eurekaserver
   ports:
    - "5555:8080"
   environment:
-
-   - SPRING_DATASOURCE_URL= jdbc:mysql://mysql:3306/nwt2_identity
+   - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-identity:3306/nwt2_identity
    - SPRING_APPLICATION_NAME =nwt2_ms_identity-service-client
    - SPRING_PROFILES_ACTIVE=enableEureka
    - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
    - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
   networks:
    - network
- mysql:
+
+ locationmodule:
+  image: springio/nwt2_ms_location:latest
+  depends_on:
+   - mysql-location
+   - eurekaserver
+  ports:
+   - "5556:8082"
+  environment:
+   - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-location:3306/nwt2_location
+   - SPRING_APPLICATION_NAME =nwt2_ms_location-service-client
+   - SPRING_PROFILES_ACTIVE=enableEureka
+   - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+   - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+  networks:
+   - network
+
+ reviewmodule:
+  image: springio/nwt2_ms_review:latest
+  depends_on:
+   - mysql-review
+   - eurekaserver
+  ports:
+   - "5557:8083"
+  environment:
+   - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-review:3306/nwt2_review
+   - SPRING_APPLICATION_NAME =nwt2_ms_review-service-client
+   - SPRING_PROFILES_ACTIVE=enableEureka
+   - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+   - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+  networks:
+   - network
+
+ photomodule:
+  image: springio/nwt2_ms_like:latest
+  depends_on:
+   - mysql-like
+   - eurekaserver
+  ports:
+   - "5558:8081"
+  environment:
+   - SPRING_DATASOURCE_URL= jdbc:mysql://mysql-like:3306/nwt2_photo
+   - SPRING_APPLICATION_NAME =nwt2_ms_like-service-client
+   - SPRING_PROFILES_ACTIVE=enableEureka
+   - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+   - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+  networks:
+   - network
+
+ rabbitmq-server:
+  image: rabbitmq:3.7.4
+  hostname: rabbitmq-server
+  container_name: rabbitmq-server
+  environment:
+   - RABBITMQ_DEFAULT_USER=guest
+   - RABBITMQ_DEFAULT_PASS=guest
+  ports:
+   - "15672:15672"
+   - "5672:5672"
+  networks:
+   -network
+
+ mysql-location:
   image: mysql:5.6
+  container_name: mysql-location
+  ports:
+   - 3309:3306
+  networks:
+   - network
+  environment:
+   - MYSQL_ROOT_PASSWORD=1234
+   - MYSQL_DATABASE=nwt2_location
+
+ mysql-identity:
+  image: mysql:5.6
+  container_name: mysql-identity
   environment:
    - MYSQL_ROOT_PASSWORD=1234
    - MYSQL_DATABASE=nwt2_identity
@@ -37,6 +124,28 @@ services:
    - 3333:3306
   networks:
    - network
+
+ mysql-review:
+  image: mysql:5.6
+  container_name: mysql-review
+  ports:
+   - 3307:3306
+  networks:
+   - network
+  environment:
+   - MYSQL_ROOT_PASSWORD=1234
+   - MYSQL_DATABASE=nwt2_review
+
+ mysql-like:
+  image: mysql:5.6
+  container_name: mysql-like
+  ports:
+   - 3334:3306
+  networks:
+   - network
+  environment:
+   - MYSQL_ROOT_PASSWORD=1234
+   - MYSQL_DATABASE=nwt2_photo
 
 networks:
  network:
