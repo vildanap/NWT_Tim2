@@ -224,4 +224,58 @@ class ReviewController {
         return new ResponseEntity<Review>(HttpStatus.NO_CONTENT);
     }
 
+    /*
+       Like review
+       @params: Integer
+       @return: ResponseEntity
+    */
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/like")
+    public ResponseEntity<?> like(@PathVariable("id") Long id) {
+        Optional<Review> selectedReview = reviewRepository.findById(id);
+
+        if(!selectedReview.isPresent()) {
+            return new ResponseEntity<JSONObject>(
+                    JSONExceptionHandler.getErrorObject("No entity with ID: " + id, HttpStatus.NOT_FOUND.value()),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+
+        if(selectedReview.get().getNumberOfLikes()==null) {
+            selectedReview.get().setNumberOfLikes(1);
+        }
+        else {
+            selectedReview.get().setNumberOfLikes(selectedReview.get().getNumberOfLikes() + 1);
+        }
+        reviewRepository.save(selectedReview.get());
+
+        return new ResponseEntity<Review>(selectedReview.get(), HttpStatus.OK);
+    }
+
+    /*
+      Dislike review
+      @params: Integer
+      @return: ResponseEntity
+   */
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/dislike")
+    public ResponseEntity<?> dislike(@PathVariable("id") Long id) {
+        Optional<Review> selectedReview = reviewRepository.findById(id);
+
+        if(!selectedReview.isPresent()) {
+            return new ResponseEntity<JSONObject>(
+                    JSONExceptionHandler.getErrorObject("No entity with ID: " + id, HttpStatus.NOT_FOUND.value()),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+
+        if(selectedReview.get().getNumberOfDislikes()==null){
+            selectedReview.get().setNumberOfDislikes(1);
+        }
+        else {
+            selectedReview.get().setNumberOfDislikes(selectedReview.get().getNumberOfDislikes() + 1);
+        }
+        reviewRepository.save(selectedReview.get());
+
+        return new ResponseEntity<Review>(selectedReview.get(), HttpStatus.OK);
+    }
+
 }
