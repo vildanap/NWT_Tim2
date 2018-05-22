@@ -3,5 +3,5 @@
  If needed, app credentials (client and secret) will be kept here
 */
 export default {
-  url: 'http://localhost:8082/'
+  url: 'http://localhost:8084/'
 }

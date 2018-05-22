@@ -28,6 +28,7 @@ export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
     url: apiconfig.url + endpoint,
   }
 
+  
   // Return axios promise
   return axios(options);
 }
