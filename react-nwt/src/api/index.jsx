@@ -19,7 +19,7 @@ import apiconfig from './config';
  * @param {array} headers 
  *  setting up headers of the call (e.g. Authorization heades if needed)
  */
-export const send = (endpoint, data = {}, method = "GET", headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Origin': 'http://localhost:3000'}) => {
+export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
   // Configure the request options
   let options = {
     method,

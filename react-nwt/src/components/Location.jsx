@@ -8,7 +8,8 @@ class Location extends Component {
         super()
 
         this.state = {
-            location: []
+            location: [],
+            reviews: []
         }
     }
 
@@ -18,12 +19,16 @@ class Location extends Component {
 
     initilize = async () => {
         try {
-            let endpoint = "locations/1"
+            let endpoint = "nwt2_ms_location-service-client/locations/1"
             let location = await api.send(endpoint)
 
-            this.setState({location : location.data})
+            let endpointReviews="nwt2_ms_review-service-client/reviews/location/1"
+            let reviews = await api.send(endpointReviews)
+
+            this.setState({location : location.data, reviews : reviews.data})
 
             console.log(this.state.location)
+            console.log(this.state.reviews)
         } catch (err) {
             console.log(err)
         }
@@ -51,7 +56,12 @@ class Location extends Component {
 		            <div>
                     <h3>Reviews</h3>
                     </div>
-                    <Review value={5} />;
+                    {
+                        this.state.reviews.map(
+                            review => <Review value={review} />
+                           )
+                    }
+                    
                 </div>
             </div>
         )
