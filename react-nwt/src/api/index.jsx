@@ -19,7 +19,7 @@ import apiconfig from './config';
  * @param {array} headers 
  *  setting up headers of the call (e.g. Authorization heades if needed)
  */
-export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
+export const send = (endpoint, data = {}, method = "GET", headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Origin': 'http://localhost:3000'}) => {
   // Configure the request options
   let options = {
     method,
@@ -28,6 +28,7 @@ export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
     url: apiconfig.url + endpoint,
   }
 
+  
   // Return axios promise
   return axios(options);
 }
