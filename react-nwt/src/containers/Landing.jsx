@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 
+// API wrapper 
 import * as api from '../api'
+
+// components 
+import Cover from '../components/landing/Cover'
+import Locations from '../components/landing/Locations'
 
 class Landing extends Component {
     constructor() {
@@ -31,13 +36,9 @@ class Landing extends Component {
     render() {
         return (
             <div>
-                NWT 2 Frontend React project <br /><br />
-
-                We have connected to the all location list: <br /><br />
+                <Cover />
+                <Locations />
                 
-                <pre>
-                    { JSON.stringify(this.state.locations, null, 2) }
-                </pre>
             </div>
         )
     }

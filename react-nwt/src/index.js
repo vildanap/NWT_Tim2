@@ -6,6 +6,9 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import './index.css';
 
 // Components & Containers
+import Menu from './components/common/Menu'
+import Footer from './components/common/Footer'
+
 import Landing from './containers/Landing'
 import Location from './components/Location'
 import Review from './components/Review'
@@ -16,8 +19,10 @@ import registerServiceWorker from './registerServiceWorker'
 ReactDOM.render(
   <BrowserRouter>
     <div>
+        <Menu />
         <Route exact path="/" component={Landing} /> 
         <Route exact path="/location" component={Location} />
+        <Footer />
     </div>
   </BrowserRouter>, 
 	document.getElementById('root')
