@@ -21,7 +21,7 @@ public class Role {
     private Long id;
 
     @NotEmpty(message = "Name cannot be empty")
-    @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters")
+    @Size(min = 2, max = 200, message = "Name must be between 5 and 200 characters")
     private String name;
 
    // @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)

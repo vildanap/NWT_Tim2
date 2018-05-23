@@ -2,9 +2,14 @@ package com.nwt2.identity.nwt2_ms_identity.Model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -24,12 +29,16 @@ public class User {
     private String username;
 
     @JsonIgnore
-    @Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})",flags={Pattern.Flag.CASE_INSENSITIVE}, message="Password must contain: at least one digit(0-9), lowercase character, uppercase character. Length: 6-15 characters!")
+    //@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})",flags={Pattern.Flag.CASE_INSENSITIVE}, message="Password must contain: at least one digit(0-9), lowercase character, uppercase character. Length: 6-15 characters!")
     private String password;
 
     @Email(message = "Email should be valid")
     private String email;
 
+
+    @JoinColumn(name = "role_id")
+    @ManyToOne
+    private Role role;
     public Role getRole() {
         return role;
     }
@@ -37,10 +46,6 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    @JoinColumn(name = "role_id")
-    @ManyToOne
-    private Role role;
    /* @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId", referencedColumnName = "id", nullable = false)
     private Role role;
@@ -129,5 +134,8 @@ public class User {
                 "User[id=%d, firstName='%s', lastName='%s']",
                 id, firstName, lastName);
     }
+
+
+
 
 }

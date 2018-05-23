@@ -13,9 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.ConstraintViolation;
@@ -28,7 +31,7 @@ import java.util.Set;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-
+@EnableJpaRepositories(basePackages="com.nwt2.identity.nwt2_ms_identity.repository")
 public class Nwt2MsIdentityApplication {
 
 	public static void main(String[] args) {
@@ -40,14 +43,17 @@ public class Nwt2MsIdentityApplication {
 			return (args) -> {
 
 				Role r1= new Role("admin");
-				Role r2= new Role("registeredUser");
+				Role r2= new Role("user");
 				role.save(r1);
 				role.save(r2);
 
-				user.save(new User("Vildana","Panjeta","vildanapanjeta","pass12A","vildanapanjeta@gmail.com",r2));
-				user.save(new User("Zerina","Dragnic","zerinadragnic","pass12A","zerinadragnic@gmail.com",r2));
-				user.save(new User("Amina","Puce","aminapuce","pass21A","aminapuce@gmail.com",r2));
-				user.save(new User("Mirza","Ohranovic","mirzaohranovic","pass21A","mirzaohranovic@gmail.com",r2));
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode("pass12A");
+
+				user.save(new User("Vildana","Panjeta","vildanapanjeta",hashedPassword,"vildanapanjeta@gmail.com",r2));
+				user.save(new User("Zerina","Dragnic","zerinadragnic",hashedPassword,"zerinadragnic@gmail.com",r2));
+				user.save(new User("Amina","Puce","aminapuce",hashedPassword,"aminapuce@gmail.com",r2));
+				user.save(new User("Mirza","Ohranovic","mirzaohranovic",hashedPassword,"mirzaohranovic@gmail.com",r2));
 
 				//TEST : validacija - firstename, username i password nisu u ispravnom formatu
 				ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
