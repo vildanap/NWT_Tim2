@@ -24,7 +24,7 @@ class Create extends Component {
    
     const { name} = this.state;
 
-    let endpoint = "nwt2_ms_location-service-client/countries/new?access_token=a32b4332-0b9d-42c1-9001-1744b5fa257a"
+    let endpoint = "nwt2_ms_location-service-client/countries/new?access_token=e0f55961-6094-4862-a6ef-e384cb70608c"
     let response = await api.send(endpoint, { name }, "POST")
     
     if(response.status == "200" ||response.status == "201"){ alert("Poruka: Created!");}

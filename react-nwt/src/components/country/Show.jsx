@@ -44,7 +44,7 @@ class Show extends Component {
               <dd>{this.state.country.name}</dd>
               
             </dl>
-            <Link to={`/edit/${this.state.country.id}`} className="btn btn-success">Edit</Link>&nbsp;
+            <Link to={`/country/edit/${this.state.country.id}`} className="btn btn-success">Edit</Link>&nbsp;
             <button onClick={this.delete.bind(this, this.state.country.id)} className="btn btn-danger">Delete</button>
           </div>
         </div>

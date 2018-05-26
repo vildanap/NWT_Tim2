@@ -19,7 +19,7 @@ class Location extends Component {
 
     initilize = async () => {
         try {
-            let endpoint = "nwt2_ms_location-service-client/locations/"+this.props.match.params.id+"?access_token=a32b4332-0b9d-42c1-9001-1744b5fa257a"
+            let endpoint = "nwt2_ms_location-service-client/locations/"+this.props.match.params.id+"?access_token=e0f55961-6094-4862-a6ef-e384cb70608c"
             let location = await api.send(endpoint)
 
             let endpointReviews="nwt2_ms_review-service-client/reviews/location/"+this.props.match.params.id;

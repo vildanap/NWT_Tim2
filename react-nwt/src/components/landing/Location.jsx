@@ -14,7 +14,7 @@ class Location extends Component {
                 <div className="location-item">
                     <div className="location-item__overlay">
                         <div className="location-item__name">
-                        <Link to={`/location/${item.id}`} >{ item.name }</Link>
+                        <Link to={`/location/${item.id}`} style={{ textDecoration: 'none', color: '#FFF' }}>{ item.name }</Link>
                         </div>
                         <div className="location-item__description">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis velit lorem, pellentesque et nibh eu, porta interdum lacus.

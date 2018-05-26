@@ -12,9 +12,12 @@ import Footer from './components/common/Footer'
 import Landing from './containers/Landing'
 import Location from './components/Location'
 import Review from './components/Review'
-import Show from './components/country/Show'
-import Create from './components/country/Create'
-import Edit from './components/country/Edit'
+import ShowReview from './components/review/Show'
+import CreateReview from './components/review/Create'
+import EditReview from './components/review/Edit'
+import ShowCountry from './components/country/Show'
+import CreateCountry from './components/country/Create'
+import EditCountry from './components/country/Edit'
 // Service worker
 import registerServiceWorker from './registerServiceWorker'
 
@@ -24,9 +27,12 @@ ReactDOM.render(
         <Menu />
         <Route exact path="/" component={Landing} /> 
         <Route exact path="/location/:id" component={Location} />
-        <Route exact path="/create" component={Create} />
-        <Route exact path="/show/:id" component={Show} />
-        <Route path='/edit/:id' component={Edit} />
+        <Route exact path="/country/create" component={CreateCountry} />
+        <Route exact path="/country/show/:id" component={ShowCountry} />
+        <Route path='/country/edit/:id' component={EditCountry} />
+        <Route exact path="/review/create" component={CreateReview} />
+        <Route exact path="/review/show/:id" component={ShowReview} />
+        <Route path='/review/edit/:id' component={EditReview} />
         <Footer />
     </div>
   </BrowserRouter>, 
