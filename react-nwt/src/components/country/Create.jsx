@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import * as api from '../../api'
 
 class Create extends Component {
 
@@ -18,46 +19,36 @@ class Create extends Component {
     this.setState(state);
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
    
     const { name} = this.state;
 
-    axios.post('http://localhost:8082/countries/new', { name })
-    .then(function (response) {
-      console.log("Response");
-        console.log(response);
-        if(response.status == "200" ||response.status == "201"){ alert("Poruka: Created!");}
-      })
-      .catch(function (error) {
-        console.log("Error");
-        console.log(error);
-
-      if(error.response.data.errorMessage == null)
-        {alert("Poruka: " + error.response.data.fieldErrors[0].message);}      
-        else{alert("Poruka: " + error.response.data.errorMessage);}
-      });      
+    let endpoint = "nwt2_ms_location-service-client/countries/new?access_token=e0f55961-6094-4862-a6ef-e384cb70608c"
+    let response = await api.send(endpoint, { name }, "POST")
+    
+    if(response.status == "200" ||response.status == "201"){ alert("Poruka: Created!");}
   }
 
   render() {
     const { name} = this.state;
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+      <div className="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
               ADD COUNTRY
             </h3>
           </div>
-          <div class="panel-body">
-            <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Home</Link></h4>
+          <div className="panel-body">
+            <h4><Link to="/"><span className="glyphicon glyphicon-th-list" aria-hidden="true"></span> Home</Link></h4>
             <form onSubmit={this.onSubmit}>
-              <div class="form-group">
-                <label for="isbn">Name:</label>
-                <input type="text" class="form-control" name="name" value={name} onChange={this.onChange} placeholder="Name" />
+              <div className="form-group">
+                <label htmlFor="isbn">Name:</label>
+                <input type="text" className="form-control" name="name" value={name} onChange={this.onChange} placeholder="Name" />
               </div>
               
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" className="btn btn-default">Submit</button>
             </form>
           </div>
         </div>

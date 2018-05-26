@@ -22,7 +22,7 @@ class Landing extends Component {
 
     initilize = async () => {
         try {
-            let endpoint = "nwt2_ms_location-service-client/locations/all"
+            let endpoint = "nwt2_ms_location-service-client/locations/all?access_token=e0f55961-6094-4862-a6ef-e384cb70608c"
             let locations = await api.send(endpoint)
 
             this.setState({locations : locations.data})

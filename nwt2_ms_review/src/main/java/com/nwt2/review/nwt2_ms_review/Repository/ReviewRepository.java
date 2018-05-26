@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ReviewRepository extends CrudRepository<Review, Long> {
     Iterable<Review> findByCityId(Integer cityId);
+    Long countByCityId(Long cityId);
 }

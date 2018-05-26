@@ -4,7 +4,9 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.nwt2.review.nwt2_ms_review.ExceptionHandler.JSONExceptionHandler;
+import com.nwt2.review.nwt2_ms_review.Model.Location;
 import com.nwt2.review.nwt2_ms_review.Model.Review;
+import com.nwt2.review.nwt2_ms_review.Repository.LocationRepository;
 import com.nwt2.review.nwt2_ms_review.Repository.ReviewRepository;
 import com.nwt2.review.nwt2_ms_review.Services.PhotoEventHandler;
 import net.minidev.json.JSONObject;
@@ -18,9 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import javax.xml.ws.Response;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by ohrinator on 3/27/18.
@@ -32,6 +32,9 @@ class ReviewController {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Autowired
     private PhotoEventHandler photoEventHandler;
@@ -276,6 +279,25 @@ class ReviewController {
         reviewRepository.save(selectedReview.get());
 
         return new ResponseEntity<Review>(selectedReview.get(), HttpStatus.OK);
+    }
+
+    /*
+        Get top 6 locations by number of reviews
+        @return: ResponseEntity<Iterable<Review>>
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/toplocations")
+    public ResponseEntity<Iterable<Location>> getTopLocations() {
+       Iterable<Location> locations = this.locationRepository.findFirst6ByOrderByIdDesc();//locationRepository.findAll();
+       /* Map<Long, Long> map = new HashMap<Long, Long>();
+
+        List<Location> topLocations = new ArrayList<Location>();
+
+        for (Location l : locations) {
+            map.put(l.getId(), this.reviewRepository.countByCityId(l.getId()));
+        }*/
+        //TODO
+
+        return new ResponseEntity<Iterable<Location>>(locations, HttpStatus.OK);
     }
 
 }

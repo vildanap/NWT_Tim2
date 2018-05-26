@@ -30,22 +30,22 @@ class Show extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+      <div className="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
             Country Details
             </h3>
           </div>
-          <div class="panel-body">
-            <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Home</Link></h4>
+          <div className="panel-body">
+            <h4><Link to="/"><span className="glyphicon glyphicon-th-list" aria-hidden="true"></span> Home</Link></h4>
             <dl>
               <dt>Name:</dt>
               <dd>{this.state.country.name}</dd>
               
             </dl>
-            <Link to={`/edit/${this.state.country.id}`} class="btn btn-success">Edit</Link>&nbsp;
-            <button onClick={this.delete.bind(this, this.state.country.id)} class="btn btn-danger">Delete</button>
+            <Link to={`/country/edit/${this.state.country.id}`} className="btn btn-success">Edit</Link>&nbsp;
+            <button onClick={this.delete.bind(this, this.state.country.id)} className="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>

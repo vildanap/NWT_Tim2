@@ -20,6 +20,7 @@ import java.util.Optional;
 /**
  * Created by Dragnic on 3/25/2018.
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/countries")
 public class CountyController {
