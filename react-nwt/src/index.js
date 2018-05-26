@@ -23,7 +23,7 @@ ReactDOM.render(
     <div>
         <Menu />
         <Route exact path="/" component={Landing} /> 
-        <Route exact path="/location" component={Location} />
+        <Route exact path="/location/:id" component={Location} />
         <Route exact path="/create" component={Create} />
         <Route exact path="/show/:id" component={Show} />
         <Route path='/edit/:id' component={Edit} />

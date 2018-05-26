@@ -11,9 +11,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Location {
-    @Id
-    private Long id;
+public class Location {    @Id
+private Long id;
 
     @NotNull(message = "Name cannot be null")
     @Size(min = 5, max = 200, message = "Name must be between 5 and 200 characters")
@@ -41,4 +40,5 @@ public class Location {
     public void setName(String name) {
         this.name = name;
     }
+
 }

@@ -1,12 +1,32 @@
 import React, { Component } from 'react'
 
 import Location from './Location'
+import * as api from '../../api'
 
 class Locations extends Component {
     constructor() {
         super()
+
+        this.state = {
+            locations: []
+        }
     }
 
+    componentWillMount() {
+        this.initilize()
+    }
+
+    initilize = async () => {
+        try {
+            let endpoint = "nwt2_ms_location-service-client/locations/all?access_token=a32b4332-0b9d-42c1-9001-1744b5fa257a";
+            let locations = await api.send(endpoint);
+            console.log("BILOO");
+            this.setState({locations : locations.data});
+        } catch (err) {
+            console.log(err)
+        }
+    } 
+    
     render() {
         const cities = [
             {
@@ -26,13 +46,11 @@ class Locations extends Component {
             <section className="locations-wrapper">
                 <div className="container pull-up-wrapper">
                     <div className="row">
-                        <Location city={cities[0]}/>
-                        <Location city={cities[1]}/>
-                        <Location city={cities[2]}/>
-
-                        <Location city={cities[0]}/>
-                        <Location city={cities[1]}/>
-                        <Location city={cities[2]}/>
+                    {
+                        this.state.locations.map(
+                            location => <Location city={location} />
+                           )
+                    }
                     </div>
                 </div>
             </section>

@@ -8,19 +8,19 @@ class Footer extends Component {
     render() {
         return (
             <section id="footer">
-                <section class="footer-up">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <span class="footer-logo-text">
+                <section className="footer-up">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-8 col-sm-8 col-xs-12">
+                                <span className="footer-logo-text">
                                     TravelReview
                                 </span>
-                                <span class="footer-logo-slogan">
+                                <span className="footer-logo-slogan">
                                     Find reviews for your next adventure
                                 </span>
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-12">
-                                <span class="footer-up_heading">
+                            <div className="col-md-2 col-sm-2 col-xs-12">
+                                <span className="footer-up_heading">
                                     Website
                                 </span>
 
@@ -39,8 +39,8 @@ class Footer extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-12">
-                                <span class="footer-up_heading">
+                            <div className="col-md-2 col-sm-2 col-xs-12">
+                                <span className="footer-up_heading">
                                     Fund us on...
                                 </span>
 
@@ -59,11 +59,11 @@ class Footer extends Component {
                         </div>
                     </div>
                 </section>
-                <section class="footer-down">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <span class="footer-down_text">
+                <section className="footer-down">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-12 col-sm-12 col-xs-12">
+                                <span className="footer-down_text">
                                     Copyright @ TravelReview. All rights reserved.
                                 </span>
                             </div>

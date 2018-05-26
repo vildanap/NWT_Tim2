@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class Location extends Component {
     constructor() {
@@ -13,7 +14,7 @@ class Location extends Component {
                 <div className="location-item">
                     <div className="location-item__overlay">
                         <div className="location-item__name">
-                            { item.name }
+                        <Link to={`/location/${item.id}`} >{ item.name }</Link>
                         </div>
                         <div className="location-item__description">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis velit lorem, pellentesque et nibh eu, porta interdum lacus.
@@ -27,7 +28,7 @@ class Location extends Component {
                             </div>
                         </div>
                     </div>
-                    <img src={ item.image } />
+                    <img src={ item.photoUrl } />
                 </div>
             </div>
         )
