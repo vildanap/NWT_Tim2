@@ -239,3 +239,8 @@ body {
     font-weight: 300;
     letter-spacing: 2px;
 }
+
+/** Login form */
+.login-form {
+  padding: 60px 0;
+}
