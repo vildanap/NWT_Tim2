@@ -378,4 +378,8 @@ body {
   justify-content: center;
   text-align: center;
   font-weight: bold
-}
+
+/** Login form */
+.login-form {
+  padding: 60px 0;
+ }
