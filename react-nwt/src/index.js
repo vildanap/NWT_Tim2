@@ -12,6 +12,7 @@ import Footer from './components/common/Footer'
 
 // authenticaiton
 import Login from './containers/Login'
+import Registration from './containers/Registration'
 
 // public
 import Landing from './containers/Landing'
@@ -46,7 +47,7 @@ ReactDOM.render(
         <Route path='/review/edit/:id' component={EditReview} />
         <Route exact path="/location/create" component={LocationCreate} />
 
-  
+        <Route path="/registration" component={Registration} />
         <Route path="/login" component={Login} />
 
         <Footer />

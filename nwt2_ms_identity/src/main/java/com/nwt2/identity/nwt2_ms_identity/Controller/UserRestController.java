@@ -8,6 +8,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RefreshScope
 @RequestMapping("/users")
 public class UserRestController {
@@ -63,8 +65,15 @@ public class UserRestController {
             return new ResponseEntity(new CustomErrorType("Unable to create. A User with username " +
                     user.getUsername() + " already exist."), HttpStatus.CONFLICT);
         }
+
+        // encode the password
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+
+        user.setPassword(hashedPassword);
+
         usersService.saveUser(user);
-        eh.handleAfterCreated(user);
+        //eh.handleAfterCreated(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
