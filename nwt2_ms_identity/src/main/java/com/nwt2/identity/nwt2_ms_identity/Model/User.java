@@ -28,7 +28,7 @@ public class User {
     @Size(min=4, max=15, message = "Username must be between 4 and 15 characters")
     private String username;
 
-    @JsonIgnore
+    //@JsonIgnore
     //@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,15})",flags={Pattern.Flag.CASE_INSENSITIVE}, message="Password must contain: at least one digit(0-9), lowercase character, uppercase character. Length: 6-15 characters!")
     private String password;
 
@@ -62,6 +62,15 @@ public class User {
   //  private Long roleId;
 
     protected User() {}
+
+    public User(String firstName,String lastName,String username,String password,String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = null;
+    }
 
     public User(String firstName,String lastName,String username,String password,String email,Role role){
         this.firstName = firstName;

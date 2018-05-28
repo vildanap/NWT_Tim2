@@ -238,3 +238,149 @@ body {
     font-weight: 300;
     letter-spacing: 2px;
 }
+
+/** Carousel Review **/
+.carousel .thumb img {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.carousel .slide img {
+  max-height: 300px;  /* change this to whatever you want */
+  width: auto;
+}
+
+.carousel .carousel-slider{
+  width: 300px !important;
+}
+
+.carousel .carousel .thumbs-wrapper {
+  margin: 0 auto !important;
+}
+
+.carousel .carousel .thumbs-wrapper .thumbs {
+  margin-left: -10%;
+}
+
+.carousel .carousel .thumbs-wrapper .thumbs .thumb {
+  margin-top: 10px;
+  width: 100px;
+  height: 50px;
+}
+
+/**Review **/
+.review-wrapper {
+  background: #fefefe;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  position: relative;
+  z-index: 15;
+  padding: 30px;
+  min-height: 300px;
+  box-shadow: 0px -4px -2px -2px rgba(93,93,93,1);
+  margin-left: 1px;
+  border: 1px solid #d5d5d5;
+}
+
+.location-background{
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    /*background: url(https://www.colourbox.com/preview/8089209-letters-handwritings-vintage-postcards-and-feather-pen.jpg) no-repeat center center fixed;
+    */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.icon {
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.icon-like {
+    font-size: 36px;
+    cursor: pointer;
+    color: green;
+}
+
+
+.icon-dislike {
+  font-size: 36px;
+  cursor: pointer;
+  color: red;
+}
+
+
+.review-comment{
+  color: #2A2627;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  position: relative;
+}
+
+.review-username{
+  color: #2A2627;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 24px;
+  position: relative;
+  z-index: 15;
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.review-likes{
+  color: green;
+  font-size: 14px;
+  line-height: 24px;
+  position: relative;
+  border-bottom: 0.5px solid black;
+}
+
+.review-dislikes{
+  color: red;
+  font-size: 14px;
+  line-height: 24px;
+  position: relative;
+  border-bottom: 0.5px solid black;
+}
+
+.down{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.review-column{
+  position: relative;
+ display: block;
+ padding: 10px 15px;
+ background-color: #fff;
+ width: 50%;
+ float: left
+}
+
+.trim-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold
+}
+
+/** Login form */
+.login-form {
+  padding: 60px 0;
+ }

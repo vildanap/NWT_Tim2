@@ -10,7 +10,7 @@ class Location extends Component {
         const item = this.props.city
 
         return (
-            <div className="col-md-4 col-sm-4 col-xs-12">
+            <div className="col-md-6 col-sm-6">
                 <div className="location-item">
                     <div className="location-item__overlay">
                         <div className="location-item__name">
