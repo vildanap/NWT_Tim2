@@ -30,8 +30,12 @@ class Login extends Component {
                 password : this.state.password,
                 grant_type : "password"
             }
+            
+            let headers = {
+                Authorization : "Basic ZGV2Z2xhbi1jbGllbnQ6JDJhJDA0JGUvYzEvUmZzV3VUaGFXRkNyY0N1SmVveXZ3Q1YwVVJOLzZQbjlaRmxydElXYVUvdmovQmZH"
+            }
 
-            let response = await api.send(endpoint, payload, "POST")
+            let response = await api.send(endpoint, payload, "POST", headers)
 
             let token = response.access_token
 
