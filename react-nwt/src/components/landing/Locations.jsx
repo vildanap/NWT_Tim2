@@ -20,7 +20,6 @@ class Locations extends Component {
         try {
             let endpoint = "nwt2_ms_location-service-client/locations/all?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c";
             let locations = await api.send(endpoint);
-            console.log("BILOO");
             this.setState({locations : locations.data});
         } catch (err) {
             console.log(err)

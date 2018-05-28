@@ -22,7 +22,7 @@ class Location extends Component {
             let endpoint = "nwt2_ms_location-service-client/locations/"+this.props.match.params.id+"?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c"
             let location = await api.send(endpoint)
 
-            let endpointReviews="nwt2_ms_review-service-client/reviews/location/"+this.props.match.params.id;
+            let endpointReviews="nwt2_ms_review-service-client/reviews/location/"+this.props.match.params.id+"?access_token=43852f73-8408-43c8-a398-03e909eeb416";
             let reviews = await api.send(endpointReviews)
 
             this.setState({location : location.data, reviews : reviews.data})
@@ -36,33 +36,23 @@ class Location extends Component {
 
     render() {
         return (
-            <div>
-                <div>
-		            <div>
-                    <h2>{this.state.location.name}</h2>
-                    </div>
-                </div>
-                <div>
-		            <div>
-                    <img src="https://news.expats.cz/wp-content/uploads/2017/10/hp25-12.jpg"></img>
-                    </div>
-                </div>
-                <div >
-		            <div>
-                    <p>{this.state.location.description}</p>
-                    </div>
-                </div>
-                <div>
-		            <div>
-                    <h3>Reviews</h3>
-                    </div>
-                    {
-                        this.state.reviews.map(
-                            review => <Review value={review} />
-                           )
-                    }
-                    
-                </div>
+            <div className="location-background">
+            <div className="row">
+               <div className="col-md-12 center">
+               <h2>{this.state.location.name}</h2>
+               </div>
+            </div>
+            <div className="row">
+            <img style={{ width: '100%'}}src="https://news.expats.cz/wp-content/uploads/2017/10/hp25-12.jpg"></img>
+            </div>
+            <div className="row">
+               
+                {
+                    this.state.reviews.map(
+                        review => <Review value={review} />
+                    )
+                }
+            </div>
             </div>
         )
     }
