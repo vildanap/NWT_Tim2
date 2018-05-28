@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 import * as api from '../api'
+import * as auth from '../auth'
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -34,8 +36,9 @@ class LocationCreate extends Component {
   }
 
   componentWillMount() {
+    auth.redirectIfNotAuthenticated()
     this.initilize()
-}
+  }
 
 initilize = async () => {
     try {
