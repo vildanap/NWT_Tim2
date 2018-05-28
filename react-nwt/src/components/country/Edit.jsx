@@ -12,7 +12,7 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8082/countries/'+this.props.match.params.id+"?access_token=183f777d-80a3-43c4-bc6c-7f71bf1197cf")
+    axios.get('http://localhost:8082/countries/'+this.props.match.params.id+"?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c")
       .then(res => {
         this.setState({ country: res.data });
         console.log(this.state.country);
