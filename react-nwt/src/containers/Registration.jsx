@@ -5,14 +5,17 @@ import * as api from '../api'
 import * as auth from '../auth'
 
 // components 
-import LoginForm from '../components/auth/Login'
+import RegistrationForm from '../components/auth/Registration'
 
-class Login extends Component {
+class Registration extends Component {
     constructor() {
         super()
 
         this.state = {
             email : '',
+            firstName : '',
+            lastName : '',
+            username : '',
             password : ''
         }
     }
@@ -21,25 +24,26 @@ class Login extends Component {
         auth.redirectIfAuthenticated()
     }
 
-    login = async () => {
+    register = async () => {
         try {
-            let endpoint = "nwt2_ms_identity-service-client/oauth/token"
+            let endpoint = "nwt2_ms_identity-service-client/users/new/"
 
             let payload = {
-                email : this.state.email, 
+                email : this.state.email,
+                firstName : this.state.firstName,
+                lastName : this.state.lastName,
+                username : this.state.username,
                 password : this.state.password,
-                grant_type : "password"
             }
 
             let response = await api.send(endpoint, payload, "POST")
 
-            let token = response.access_token
+            console.log(response)
 
-            // set the token
-            localStorage.setItem('token', token)
+            //return
 
             // redirect to home
-            window.location = "/"
+            window.location = "/login"
         } catch (err) {
             alert("Invalid credentials?")
         }
@@ -52,13 +56,13 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <LoginForm 
+                <RegistrationForm 
                     onChange={this.onChange}
-                    login={this.login}
+                    register={this.register}
                     credentials={this.state}/>
             </div>
         )
     }
 }
 
-export default Login
+export default Registration

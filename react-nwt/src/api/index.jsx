@@ -20,6 +20,14 @@ import apiconfig from './config';
  *  setting up headers of the call (e.g. Authorization heades if needed)
  */
 export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
+  // set authorizaiton token if avialable
+  if(localStorage.getItem('token') !== null) {
+    headers = {
+      Authorization : "Bearer " + localStorage.getItem('token'),
+      ...headers
+    }
+  }
+
   // Configure the request options
   let options = {
     method,
