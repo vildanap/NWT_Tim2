@@ -19,15 +19,16 @@ import apiconfig from './config';
  * @param {array} headers 
  *  setting up headers of the call (e.g. Authorization heades if needed)
  */
-export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
+export const send = (endpoint, data = {}, method = "GET", headers = {}, formData = false) => {
   // set authorizaiton token if avialable
   if(localStorage.getItem('token') !== null) {
     headers = {
-      Authorization : "Bearer " + localStorage.getItem('token'),
+      'Authorization' : "Bearer " + localStorage.getItem('token'),
       ...headers
     }
   }
 
+  console.log(headers)
   // Configure the request options
   let options = {
     method,
@@ -36,7 +37,23 @@ export const send = (endpoint, data = {}, method = "GET", headers = {}) => {
     url: apiconfig.url + endpoint,
   }
 
-  
+  // for application/x-www-form-urlencoded
+  if(formData) {
+    var formBody = [];
+
+    for (var property in options.data) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(options.data[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+
+    formBody = formBody.join("&");
+
+    options.data = formBody
+
+    return axios(options)
+  }
+
   // Return axios promise
-  return axios(options);
+  return axios(options)
 }
