@@ -12,7 +12,7 @@ class Login extends Component {
         super()
 
         this.state = {
-            email : '',
+            username : '',
             password : ''
         }
     }
@@ -23,22 +23,33 @@ class Login extends Component {
 
     login = async () => {
         try {
-            let endpoint = "nwt2_ms_identity-service-client/oauth/token"
+            let endpoint = "/nwt2_ms_identity-service-client/oauth/token"
 
-            let payload = {
-                email : this.state.email, 
-                password : this.state.password,
-                grant_type : "password"
-            }
-            
-            let headers = {
-                Authorization : "Basic ZGV2Z2xhbi1jbGllbnQ6JDJhJDA0JGUvYzEvUmZzV3VUaGFXRkNyY0N1SmVveXZ3Q1YwVVJOLzZQbjlaRmxydElXYVUvdmovQmZH"
-            }
+         var details = {
+    'username': this.state.username,
+    'password': this.state.password,
+    'grant_type': 'password'
+};
 
-            let response = await api.send(endpoint, payload, "POST", headers)
+var formBody = [];
+for (var property in details) {
+  var encodedKey = encodeURIComponent(property);
+  var encodedValue = encodeURIComponent(details[property]);
+  formBody.push(encodedKey + "=" + encodedValue);
+}
+formBody = formBody.join("&");
+
+let response = fetch('http://localhost:8084/nwt2_ms_identity-service-client/oauth/token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Authorization':'Basic ZGV2Z2xhbi1jbGllbnQ6ZGV2Z2xhbi1zZWNyZXQ='
+  },
+  body: formBody
+})
 
             let token = response.access_token
-
+            console.log(response.access_token)
             // set the token
             localStorage.setItem('token', token)
 
@@ -46,6 +57,7 @@ class Login extends Component {
             window.location = "/"
         } catch (err) {
             alert("Invalid credentials?")
+            console.log(err);
         }
     } 
 

@@ -27,7 +27,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
 
-@Order(-1)
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true,proxyTargetClass=true)
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder());
     }
 
-    @Override
+  /*  @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
@@ -56,7 +56,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api-docs/**").permitAll();
     }
-
+*/
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+      http
+              .authorizeRequests()
+              .antMatchers("/login").permitAll()
+              .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
+              .antMatchers("/resources/**","/signup").permitAll()
+              .anyRequest().hasRole("USER")
+              .and()
+              .jee()
+              .mappableRoles("ROLE_USER","ROLE_ADMIN");
+  }
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
