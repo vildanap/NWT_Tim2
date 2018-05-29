@@ -21,7 +21,7 @@ class Registration extends Component {
     }
 
     componentWillMount() {
-        auth.redirectIfAuthenticated()
+        //auth.redirectIfAuthenticated()
     }
 
     register = async () => {
@@ -54,6 +54,8 @@ class Registration extends Component {
     }
 
     render() {
+        // authentication middleware
+        auth.redirectIfAuthenticated()
         return (
             <div>
                 <RegistrationForm 

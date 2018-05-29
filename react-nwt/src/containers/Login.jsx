@@ -18,46 +18,34 @@ class Login extends Component {
     }
 
     componentWillMount() {
-        auth.redirectIfAuthenticated()
+        
     }
 
     login = async () => {
         try {
-            let endpoint = "/nwt2_ms_identity-service-client/oauth/token"
+            let endpoint = "nwt2_ms_identity-service-client/oauth/token"
 
-         var details = {
-    'username': this.state.username,
-    'password': this.state.password,
-    'grant_type': 'password'
-};
+            let payload = {
+                'grant_type': 'password',
+                'username': this.state.username,
+                'password': this.state.password
+            }
 
-var formBody = [];
-for (var property in details) {
-  var encodedKey = encodeURIComponent(property);
-  var encodedValue = encodeURIComponent(details[property]);
-  formBody.push(encodedKey + "=" + encodedValue);
-}
-formBody = formBody.join("&");
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ZGV2Z2xhbi1jbGllbnQ6ZGV2Z2xhbi1zZWNyZXQ='
+            }
 
-let response = fetch('http://localhost:8084/nwt2_ms_identity-service-client/oauth/token', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    'Authorization':'Basic ZGV2Z2xhbi1jbGllbnQ6ZGV2Z2xhbi1zZWNyZXQ='
-  },
-  body: formBody
-})
+            let response = await api.send(endpoint, payload, "POST", headers, true)
+            let token = response.data.access_token
 
-            let token = response.access_token
-            console.log(response.access_token)
             // set the token
             localStorage.setItem('token', token)
 
             // redirect to home
             window.location = "/"
         } catch (err) {
-            alert("Invalid credentials?")
-            console.log(err);
+            alert(err.response.data.error_description);
         }
     } 
 
@@ -66,6 +54,8 @@ let response = fetch('http://localhost:8084/nwt2_ms_identity-service-client/oaut
     }
 
     render() {
+        // authentication middleware
+        auth.redirectIfAuthenticated()
         return (
             <div>
                 <LoginForm 

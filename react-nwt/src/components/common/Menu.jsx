@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import * as auth from '../../auth'
+
 class Menu extends Component {
     constructor() {
         super()
@@ -16,7 +18,22 @@ class Menu extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                        
+                        {
+                            !auth.isAuthenticated() &&
+                            (
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">Login</a>
+                                </li>
+                            )
+                        }
+                        {
+                            auth.isAuthenticated() &&
+                            (
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0)" onClick={auth.logout}>Logout</a>
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </nav>

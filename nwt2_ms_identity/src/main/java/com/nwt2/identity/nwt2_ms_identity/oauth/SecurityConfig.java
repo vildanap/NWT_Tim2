@@ -21,12 +21,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
-
 
 @Configuration
 @EnableWebSecurity
@@ -61,13 +61,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
       http
               .authorizeRequests()
+              .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
               .antMatchers("/login").permitAll()
+              .antMatchers("/oauth/token").permitAll()
               .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
               .antMatchers("/resources/**","/signup").permitAll()
               .anyRequest().hasRole("USER")
               .and()
               .jee()
               .mappableRoles("ROLE_USER","ROLE_ADMIN");
+     /* http
+              .csrf().disable()
+              .authorizeRequests()
+              .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()//allow CORS option call
+              .anyRequest().authenticated()
+              .and()
+              .formLogin()
+              .and()
+              .httpBasic(); */
   }
     @Bean
     public TokenStore tokenStore() {
@@ -87,9 +98,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS);
     }
 }
