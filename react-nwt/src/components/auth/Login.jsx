@@ -9,7 +9,7 @@ class LoginForm extends Component {
                         <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
                             <div className="form-group">
                                 <label>E-mail:</label>
-                                <input type="email" name="email" className="form-control" placeholer="E-mail" value={this.props.credentials.email} onChange={this.props.onChange}/>
+                                <input type="text" name="username" className="form-control" placeholer="E-mail" value={this.props.credentials.username} onChange={this.props.onChange}/>
                             </div>
 
                             <div className="form-group">

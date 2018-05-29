@@ -19,4 +19,20 @@ export function redirectIfAuthenticated() {
         window.location = '/';
 } 
 
+/**
+ *  Check if an user is authetnicate
+ */
+export function isAuthenticated() {
+    if(localStorage.getItem('token') != null)
+        return true
+    else 
+        return false
+}
 
+/**
+ * Logout function
+ */
+export function logout() {
+    localStorage.removeItem('token')
+    window.location = '/'
+}
