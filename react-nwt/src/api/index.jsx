@@ -22,10 +22,7 @@ import apiconfig from './config';
 export const send = (endpoint, data = {}, method = "GET", headers = {}, formData = false) => {
   // set authorizaiton token if avialable
   if(localStorage.getItem('token') !== null) {
-    headers = {
-      'Authorization' : "Bearer " + localStorage.getItem('token'),
-      ...headers
-    }
+    endpoint = endpoint + "?access_token=" + encodeURIComponent(localStorage.getItem('token'))
   }
 
   console.log(headers)
