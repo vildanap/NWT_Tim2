@@ -1,5 +1,6 @@
 package com.nwt2.identity.nwt2_ms_identity.oauth;
 
+import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -22,11 +23,16 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.web.session.SessionManagementFilter;
+
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -48,28 +54,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder());
     }
 
-  /*  @Override
+    /*  @Override
+      protected void configure(HttpSecurity http) throws Exception {
+          http
+                  .csrf().disable()
+                  .anonymous().disable()
+                  .authorizeRequests()
+                  .antMatchers("/api-docs/**").permitAll();
+      }
+  */
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api-docs/**").permitAll();
-    }
-*/
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-      http
-              .authorizeRequests()
-              .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-              .antMatchers("/login").permitAll()
-              .antMatchers("/oauth/token").permitAll()
-              .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
-              .antMatchers("/resources/**","/signup").permitAll()
-              .anyRequest().hasRole("USER")
-              .and()
-              .jee()
-              .mappableRoles("ROLE_USER","ROLE_ADMIN");
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/users/new").permitAll()
+                .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
+                .antMatchers("/resources/**","/signup").permitAll()
+                .anyRequest().hasRole("USER")
+                .and()
+                .jee()
+                .mappableRoles("ROLE_USER","ROLE_ADMIN");
      /* http
               .csrf().disable()
               .authorizeRequests()
@@ -79,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               .formLogin()
               .and()
               .httpBasic(); */
-  }
+    }
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();

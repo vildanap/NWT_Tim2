@@ -45,7 +45,7 @@ class Login extends Component {
             // redirect to home
             window.location = "/"
         } catch (err) {
-            alert(err.response.data.error_description);
+        
         }
     } 
 

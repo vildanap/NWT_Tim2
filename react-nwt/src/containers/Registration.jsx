@@ -26,17 +26,20 @@ class Registration extends Component {
 
     register = async () => {
         try {
-            let endpoint = "nwt2_ms_identity-service-client/users/new/"
+            let endpoint = "nwt2_ms_identity-service-client/users/new"
 
             let payload = {
                 email : this.state.email,
                 firstName : this.state.firstName,
                 lastName : this.state.lastName,
                 username : this.state.username,
-                password : this.state.password,
+                password : this.state.password
             }
-
-            let response = await api.send(endpoint, payload, "POST")
+let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            
+            let response = await api.send(endpoint, payload, "POST",headers,true)
 
             console.log(response)
 

@@ -1,5 +1,6 @@
 package com.nwt2.identity.nwt2_ms_identity.Controller;
 
+import com.nwt2.identity.nwt2_ms_identity.Model.Role;
 import com.nwt2.identity.nwt2_ms_identity.Model.User;
 import com.nwt2.identity.nwt2_ms_identity.Services.UserEventHandler;
 import com.nwt2.identity.nwt2_ms_identity.Services.UsersService;
@@ -19,8 +20,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RestController
 @RefreshScope
 @RequestMapping("/users")
 public class UserRestController {
@@ -71,7 +72,6 @@ public class UserRestController {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
 
         user.setPassword(hashedPassword);
-
         usersService.saveUser(user);
         //eh.handleAfterCreated(user);
         HttpHeaders headers = new HttpHeaders();
