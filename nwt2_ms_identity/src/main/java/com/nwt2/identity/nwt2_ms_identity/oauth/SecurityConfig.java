@@ -67,11 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/users/new").permitAll()
                 .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
                 .antMatchers("/resources/**","/signup").permitAll()
                 .anyRequest().hasRole("USER")
@@ -116,6 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS);
+                .antMatchers(HttpMethod.OPTIONS)
+        .antMatchers("/users/new");
     }
 }

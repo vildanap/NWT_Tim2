@@ -70,7 +70,6 @@ public class UserRestController {
         // encode the password
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(hashedPassword);
         usersService.saveUser(user);
         //eh.handleAfterCreated(user);
