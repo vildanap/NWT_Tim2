@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import * as api from '../../api'
+
 
 class Edit extends Component {
 
@@ -11,13 +13,26 @@ class Edit extends Component {
     };
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8082/countries/'+this.props.match.params.id+"?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c")
-      .then(res => {
-        this.setState({ country: res.data });
-        console.log(this.state.country);
-      });
-  }
+  componentWillMount() {
+    this.initilize()
+}
+
+initilize = async () => {
+    try {
+        let endpoint = "nwt2_ms_location-service-client/countries/"+this.props.match.params.id;
+        let location = await api.send(endpoint)
+
+        
+        this.setState({country : location.data})
+
+        console.log(this.state.location)
+        console.log(this.state.reviews)
+    } catch (err) {
+        console.log(err)
+    }
+} 
+
+
 
   onChange = (e) => {
     const state = this.state.country
@@ -25,16 +40,16 @@ class Edit extends Component {
     this.setState({country:state});
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
+    const { name } = this.state.country;  
 
-    const { name, address, city, postalCode, phone } = this.state.country;
-
-    axios.put('http://localhost:8082/countries/'+this.props.match.params.id, { name, address, city, postalCode, phone })
-      .then((result) => {
-        this.props.history.push("/show/"+this.props.match.params.id)
-      });
+    let endpoint = "nwt2_ms_location-service-client/countries/"+this.props.match.params.id;
+    let response = await api.send(endpoint, { name }, "PUT")
+    
+    if(response.status == "200" ||response.status == "201"){ alert("Poruka: Updated!");}
   }
+
 
   render() {
     return (

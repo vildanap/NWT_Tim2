@@ -12,7 +12,8 @@ class Show extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8082/countries/'+this.props.match.params.id)
+    console.log(localStorage.getItem('token'));
+    axios.get('http://localhost:8084/nwt2_ms_location-service-client/countries/'+this.props.match.params.id+"?=access_token="+localStorage.getItem('token'))
       .then(res => {
         this.setState({ country: res.data });
         console.log(this.state.country);
@@ -21,8 +22,9 @@ class Show extends Component {
 
   delete(id){
     console.log(id);
-    axios.delete('http://localhost:8082/countries/'+id)
+    axios.delete('http://localhost:8084/nwt2_ms_location-service-client/countries/'+id+'?access_token='+localStorage.getItem('token'))
       .then((result) => {
+        console.log(result);
         alert("Poruka: Deleted!");
         this.props.history.push("/")
       });

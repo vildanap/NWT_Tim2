@@ -42,7 +42,7 @@ class LocationCreate extends Component {
 
 initilize = async () => {
     try {
-        let endpoint = "nwt2_ms_location-service-client/countries/all"+"?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c"
+        let endpoint = "nwt2_ms_location-service-client/countries/all";
         let countries = await api.send(endpoint)
 
      
@@ -59,7 +59,7 @@ initilize = async () => {
    
     const { name, description, photoUrl, longitude, latitude, country,selectedOption} = this.state;
 
-    let endpoint = "nwt2_ms_location-service-client/locations/new?access_token=8b79b001-4343-4d70-99a9-a6ecd7edfb2c"
+    let endpoint = "nwt2_ms_location-service-client/locations/new";
     let response = await api.send(endpoint, { name:name, description:description, photoUrl:photoUrl, longitude:longitude, latitude:latitude, country: { name: selectedOption.label, id: selectedOption.value} }, "POST")
     
     if(response.status == "200" ||response.status == "201"){ alert("Poruka: Created!");}
