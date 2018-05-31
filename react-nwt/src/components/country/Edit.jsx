@@ -20,13 +20,12 @@ class Edit extends Component {
 initilize = async () => {
     try {
         let endpoint = "nwt2_ms_location-service-client/countries/"+this.props.match.params.id;
-        let location = await api.send(endpoint)
+        let country = await api.send(endpoint)
 
         
-        this.setState({country : location.data})
+        this.setState({country : country.data})
 
-        console.log(this.state.location)
-        console.log(this.state.reviews)
+        console.log(this.state.country)
     } catch (err) {
         console.log(err)
     }

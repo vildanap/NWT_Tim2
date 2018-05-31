@@ -26,7 +26,9 @@ import EditReview from './components/review/Edit'
 import ShowCountry from './components/country/Show'
 import CreateCountry from './components/country/Create'
 import EditCountry from './components/country/Edit'
-import LocationCreate from './components/LocationCreate'
+import LocationCreate from './components/location/Create'
+import LocationsAll from './components/location/Index'
+import LocationEdit from './components/location/Edit'
 
 
 // Service worker
@@ -46,6 +48,9 @@ ReactDOM.render(
         <Route exact path="/review/show/:id" component={ShowReview} />
         <Route path='/review/edit/:id' component={EditReview} />
         <Route exact path="/location/create" component={LocationCreate} />
+        <Route exact path="/location" component={LocationsAll} />
+        <Route path='/location/edit/:id' component={LocationEdit} />
+
 
         <Route path="/registration" component={Registration} />
         <Route path="/login" component={Login} />

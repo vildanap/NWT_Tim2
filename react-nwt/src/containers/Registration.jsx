@@ -35,7 +35,9 @@ class Registration extends Component {
         role : this.state.role })
         .then((result) => {
           console.log(result);
+          window.location = "/login"
         }).catch(error => {
+            alert('Invalid');
     console.log(error.response)
 });;
 

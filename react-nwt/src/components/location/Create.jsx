@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import * as api from '../api'
-import * as auth from '../auth'
+import * as api from '../../api'
+import * as auth from '../../auth'
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
-class LocationCreate extends Component {
+class Create extends Component {
 
   constructor() {
     super();
@@ -71,14 +71,12 @@ initilize = async () => {
     //<select>{this.state.countries.map(x => <option key={x.id} value={x.name}>{x.name}</option>)}</select>;
     const {name, description, photoUrl, longitude, latitude, country,selectedOption } = this.state;
     return (
-      <div className="container">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
+      <div className="container">      
+            <div className="row">
+              <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
+              <h3 className="panel-title">
               ADD LOCATION
             </h3>
-          </div>
-          <div className="panel-body">
             <h4><Link to="/"><span className="glyphicon glyphicon-th-list" aria-hidden="true"></span> Home</Link></h4>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
@@ -115,15 +113,15 @@ initilize = async () => {
             };}
         )}
       />
-
-
+      <br></br>
                  <button type="submit" className="btn btn-default">Submit</button>
             </form>
           </div>
         </div>
       </div>
+
     );
   }
 }
 
-export default LocationCreate;
+export default Create;
