@@ -16,7 +16,7 @@ import Registration from './containers/Registration'
 
 // public
 import Landing from './containers/Landing'
-import Location from './components/Location'
+import Location from './containers/Location'
 import Review from './components/Review'
 
 //protected
@@ -40,7 +40,7 @@ ReactDOM.render(
         <Menu />
         <Route exact path="/" component={Landing} /> 
   
-        <Route exact path="/location/:id" component={Location} />
+        <Route path="/location/:id" component={Location} />
         <Route exact path="/country/create" component={CreateCountry} />
         <Route exact path="/country/show/:id" component={ShowCountry} />
         <Route path='/country/edit/:id' component={EditCountry} />
@@ -50,7 +50,6 @@ ReactDOM.render(
         <Route exact path="/location/create" component={LocationCreate} />
         <Route exact path="/location" component={LocationsAll} />
         <Route path='/location/edit/:id' component={LocationEdit} />
-
 
         <Route path="/registration" component={Registration} />
         <Route path="/login" component={Login} />

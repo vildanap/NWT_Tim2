@@ -16,7 +16,7 @@ class Cover extends Component {
                                 Find your next adventure review!
                             </div>
                             <div className="search-box">
-                                <input className="search-keyword" type="text" placeholder="Where are you heading next?"/>
+                                <input name="keyword" className="search-keyword" type="text" placeholder="Where are you heading next?" value={this.props.keyword} onChange={this.props.search}/>
                                 <button className="search-button" type="submit"></button>
                             </div>
                         </div>
