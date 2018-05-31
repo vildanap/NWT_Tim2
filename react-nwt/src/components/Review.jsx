@@ -84,11 +84,9 @@ class Review extends Component {
             <p class="review-likes">{numberOfLikes} people liked this</p>
             <p class="review-dislikes">{numberOfDislikes} people disliked this</p>
             </div>
-            <div className="col-sm-2" onClick={this.like.bind(this)}>
-            <i class="fa fa-thumbs-o-up icon-like"></i>
-            </div>
-            <div className="col-sm-2" onClick={this.dislike.bind(this)}>
-            <i class="fa fa-thumbs-o-down icon-dislike"></i>
+            <div className="col-sm-2">
+                <i class="fa fa-thumbs-o-up icon-like" onClick={this.like.bind(this)}></i>
+            <i class="fa fa-thumbs-o-down icon-dislike" onClick={this.dislike.bind(this)}></i>
             </div>
             </div>
             </div>
