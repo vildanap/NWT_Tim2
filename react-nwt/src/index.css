@@ -270,7 +270,7 @@ body {
 
 /**Review **/
 .review-wrapper {
-  background: #fefefe;
+  background: gainsboro;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -279,8 +279,8 @@ body {
   padding: 30px;
   min-height: 300px;
   box-shadow: 0px -4px -2px -2px rgba(93,93,93,1);
-  margin-left: 1px;
-  border: 1px solid #d5d5d5;
+  margin-left: 0.01px;
+  border: 2px solid #d5d5d5;
 }
 
 .location-background{
@@ -304,14 +304,14 @@ body {
 .icon-like {
     font-size: 36px;
     cursor: pointer;
-    color: green;
+    color: black;
 }
 
 
 .icon-dislike {
   font-size: 36px;
   cursor: pointer;
-  color: red;
+  color: black;
 }
 
 
@@ -360,7 +360,7 @@ body {
   position: relative;
  display: block;
  padding: 10px 15px;
- background-color: #fff;
+ background-color: #343a40;
  width: 50%;
  float: left
 }
