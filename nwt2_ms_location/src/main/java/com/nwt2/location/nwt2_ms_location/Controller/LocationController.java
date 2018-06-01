@@ -73,13 +73,24 @@ public class LocationController {
 
     // -------------------Retrieve All Locations---------------------------------------------
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    public ResponseEntity<List<Location>> listAllLocations() {
-        List<Location> locations = locationRepository.findAll();
-        if (locations.isEmpty()) {
+    public ResponseEntity<Iterable<Location>> listAllLocations() {
+        Iterable<Location> locations = locationRepository.findAll();
+        if (locations.spliterator().getExactSizeIfKnown() < 1) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
             // You many decide to return HttpStatus.NOT_FOUND
         }
-        return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        return new ResponseEntity<Iterable<Location>>(locations, HttpStatus.OK);
+    }
+
+    // ------------------ Find by name ----------+ +//
+    @RequestMapping(method = RequestMethod.GET, value = "/search/{name}")
+    public ResponseEntity<Iterable<Location>> findByName(@PathVariable String name) {
+        Iterable<Location> locations = locationRepository.findByName(name);
+        if (locations.spliterator().getExactSizeIfKnown() < 1) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            // You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<Iterable<Location>>(locations, HttpStatus.OK);
     }
 
     // -------------------Retrieve One Location---------------------------------------------

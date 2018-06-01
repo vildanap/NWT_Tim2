@@ -24,7 +24,7 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-
+    @JsonIgnore
     private Set<Location> locations;
 
     public Country(){} // JPA only

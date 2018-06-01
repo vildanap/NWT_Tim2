@@ -52,6 +52,16 @@ class ReviewController {
     }
 
     /*
+        Get most recent reviews
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/recent")
+    public ResponseEntity<Iterable<Review>> getRecentReviews() {
+        Iterable<Review> reviews = this.reviewRepository.findTop10ByOrderByIdDesc();
+
+        return new ResponseEntity<Iterable<Review>>(reviews, HttpStatus.OK);
+    }
+
+    /*
         Get reviews from a single location
         @params: integer (location)
         @return: ResponseEntity<Iterable<Review>>
