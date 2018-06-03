@@ -15,6 +15,7 @@ import java.util.Optional;
 /**
  * Created by ohrinator on 3/27/18.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/types")
 public class ReviewTypeController {

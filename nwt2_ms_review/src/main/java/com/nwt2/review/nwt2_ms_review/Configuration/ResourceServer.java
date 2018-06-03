@@ -41,4 +41,27 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenServices(tokenServices()).resourceId("resource_id");
     }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {/*
+        http.
+                anonymous().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+  .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    }
+        http.
+                authorizeRequests()
+                .antMatchers("/locations/all").permitAll()
+                .antMatchers("/locations/{ID}").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());*/
+        http.
+                authorizeRequests()
+                .antMatchers("reviews/recent").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+    }
 }

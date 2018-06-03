@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins="*", maxAge=3600)
 @RestController
 @RefreshScope
 @RequestMapping("/users")
@@ -53,6 +53,16 @@ public class UserRestController {
                     HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Optional<User>>(user, HttpStatus.OK);
+    }
+
+    // -------------------Retrieve One User By Username---------------------------------------------
+    @RequestMapping(value = "/findUsername/{userName}", method = RequestMethod.GET)
+    public ResponseEntity<User> findByUserName(@PathVariable String userName) {
+        User user = this.usersService.findByUsername(userName);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 

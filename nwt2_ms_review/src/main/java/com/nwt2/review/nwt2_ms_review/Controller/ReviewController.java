@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * Created by ohrinator on 3/27/18.
  */
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 @RequestMapping("/reviews")
 class ReviewController {
