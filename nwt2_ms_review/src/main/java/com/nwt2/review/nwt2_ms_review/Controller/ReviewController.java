@@ -5,6 +5,7 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.nwt2.review.nwt2_ms_review.ExceptionHandler.JSONExceptionHandler;
 import com.nwt2.review.nwt2_ms_review.Model.Location;
+import com.nwt2.review.nwt2_ms_review.Model.LocationInfo;
 import com.nwt2.review.nwt2_ms_review.Model.Review;
 import com.nwt2.review.nwt2_ms_review.Repository.LocationRepository;
 import com.nwt2.review.nwt2_ms_review.Repository.ReviewRepository;
@@ -69,6 +70,18 @@ class ReviewController {
     @RequestMapping(method = RequestMethod.GET, value = "/location/{cityId}")
     public ResponseEntity<Iterable<Review>> getLocationReviews(@PathVariable Integer cityId) {
         Iterable<Review> reviews = this.reviewRepository.findByCityId(cityId);
+
+        return new ResponseEntity<Iterable<Review>>(reviews, HttpStatus.OK);
+    }
+
+    /*
+      Get reviews from a single user
+      @params: integer (user)
+      @return: ResponseEntity<Iterable<Review>>
+   */
+    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}")
+    public ResponseEntity<Iterable<Review>> getUserReviews(@PathVariable Integer userId) {
+        Iterable<Review> reviews = this.reviewRepository.findByUserId(userId);
 
         return new ResponseEntity<Iterable<Review>>(reviews, HttpStatus.OK);
     }
@@ -309,5 +322,22 @@ class ReviewController {
 
         return new ResponseEntity<Iterable<Location>>(locations, HttpStatus.OK);
     }
+
+    /*
+        Get info about location (number of reviews and average grade)
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "location/info/{locationId}")
+    public ResponseEntity<LocationInfo> getInfoAboutLocation(@PathVariable("locationId") Integer locationId) {
+        Long numberOfReviews = this.reviewRepository.countByCityId(locationId);
+        Double averageGrade = this.reviewRepository.getAverageGrade(locationId);
+
+        if(averageGrade.equals(null))averageGrade = 0.0;
+
+        LocationInfo locationInfo = new LocationInfo(numberOfReviews, averageGrade);
+        return new ResponseEntity<LocationInfo>(locationInfo, HttpStatus.OK);
+    }
+
+
+
 
 }
