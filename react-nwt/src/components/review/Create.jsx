@@ -28,6 +28,7 @@ class Create extends Component {
   componentWillMount() {
     this.initilize()
   }
+
   initilize = async () => {
     try {
         let endpoint = "nwt2_ms_review-service-client/types/all";
@@ -59,7 +60,7 @@ handleChange = (selectedOption) => {
 try{
        
     let endpoint = "nwt2_ms_review-service-client/reviews/create"
-    let response = await api.send(endpoint,{ comment: comment, grade: grade, numberOfLikes: number_of_likes, numberOfDislikes: number_of_dislikes, reviewTypeId: selectedOption.value, userId: localStorage.getItem('uid'), cityId: city_id} , "POST")
+    let response = await api.send(endpoint,{ comment: comment, grade: grade, numberOfLikes: number_of_likes, numberOfDislikes: number_of_dislikes, reviewTypeId: selectedOption.value, userId: localStorage.getItem('uid'), cityId: this.props.location.state.cityId} , "POST")
     
     console.log(response)
     if(response.status == "200" ||response.status == "201"){ alert("Poruka: Created!");}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import Loading from '../components/common/Loading'
 import Review from '../components/Review'
+import { Link } from 'react-router-dom'
 
 import * as api from '../api'
 
@@ -41,6 +42,10 @@ class Location extends Component {
         }
     } 
 
+    createReview(value) {
+        console.log(`${value} clicked`);
+    }
+
     render() {
         return (
             <div>
@@ -57,6 +62,12 @@ class Location extends Component {
                                     <h2>{this.state.location.name}</h2>
                                 </div>
                                 <img src={ this.state.location.photoUrl } />
+                            </div>
+                            <div className="row"> 
+                            <button onClick={() => this.createReview(this.state.location.id)}>Add review</button>
+                            <button>
+                            <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >ADD REVIEW</Link>
+                            </button>
                             </div>
                             <div className="row">
                                 {
