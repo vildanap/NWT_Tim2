@@ -328,10 +328,16 @@ class ReviewController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "location/info/{locationId}")
     public ResponseEntity<LocationInfo> getInfoAboutLocation(@PathVariable("locationId") Integer locationId) {
-        Long numberOfReviews = this.reviewRepository.countByCityId(locationId);
-        Double averageGrade = this.reviewRepository.getAverageGrade(locationId);
 
-        if(averageGrade.equals(null))averageGrade = 0.0;
+        Long numberOfReviews = Long.valueOf(0);
+        Double averageGrade = 0.0;
+        if(this.reviewRepository.existsByCityId(locationId)) {
+            numberOfReviews = this.reviewRepository.countByCityId(locationId);
+            averageGrade = this.reviewRepository.getAverageGrade(locationId);
+        }
+
+        if(numberOfReviews.equals(null) || numberOfReviews.equals("undefined"))numberOfReviews = Long.valueOf(0);
+        if(averageGrade.equals(null) || averageGrade.equals("undefined"))averageGrade = 0.0;
 
         LocationInfo locationInfo = new LocationInfo(numberOfReviews, averageGrade);
         return new ResponseEntity<LocationInfo>(locationInfo, HttpStatus.OK);

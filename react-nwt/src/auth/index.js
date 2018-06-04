@@ -36,3 +36,11 @@ export function logout() {
     localStorage.removeItem('token')
     window.location = '/'
 }
+
+
+/**
+ * My reviews function
+ */
+export function myreviews() {
+    window.location = '/myreviews'
+}

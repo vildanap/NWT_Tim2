@@ -26,6 +26,14 @@ class Menu extends Component {
                                 </li>
                             )
                         }
+                         {
+                            auth.isAuthenticated() && 
+                            (
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:void(0)" onClick={auth.myreviews}>My reviews</a>
+                                </li>
+                            )
+                        }
                         {
                             auth.isAuthenticated() &&
                             (

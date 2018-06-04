@@ -6,13 +6,12 @@ import { Link } from 'react-router-dom'
 
 import * as api from '../api'
 
-class Location extends Component {
+class Reviews extends Component {
     constructor() {
         super()
 
         this.state = {
             loading: true,
-            location: [],
             reviews: []
         }
     }
@@ -27,16 +26,12 @@ class Location extends Component {
 
     initilize = async () => {
         try {
-            let endpoint = "nwt2_ms_location-service-client/locations/"+this.props.match.params.id;
-            let location = await api.send(endpoint)
+            let endpoint = "nwt2_ms_review-service-client/reviews/user/" + localStorage.getItem('uid');
+            let reviews = await api.send(endpoint)
 
-            let endpointReviews="nwt2_ms_review-service-client/reviews/location/"+this.props.match.params.id;
-            let reviews = await api.send(endpointReviews)
-
-            this.setState({location : location.data, reviews : reviews.data})
-
-            console.log(this.state.location)
+            this.setState({reviews : reviews.data})
             console.log(this.state.reviews)
+
         } catch (err) {
             console.log(err)
         }
@@ -53,16 +48,11 @@ class Location extends Component {
                 {
                     !this.state.loading && (
                         <div className="location-background">
-                            <div className="location-cover">
+                         <div className="location-cover">
                                 <div className="location-cover__overlay">
-                                    <h2>{this.state.location.name}</h2>
+                                    <h2>My reviews</h2>
                                 </div>
-                                <img src={ this.state.location.photoUrl } />
-                            </div>
-                            <div className="row"> 
-                            <button>
-                            <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >ADD REVIEW</Link>
-                            </button>
+                                <img src="https://i.pinimg.com/originals/de/fc/39/defc395955a5dd93a78b4d648ab2c05a.jpg" />
                             </div>
                             <div className="row">
                                 {
@@ -79,4 +69,4 @@ class Location extends Component {
     }
 }
 
-export default Location
+export default Reviews

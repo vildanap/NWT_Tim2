@@ -29,6 +29,7 @@ import EditCountry from './components/country/Edit'
 import LocationCreate from './components/location/Create'
 import LocationsAll from './components/location/Index'
 import LocationEdit from './components/location/Edit'
+import Reviews from './components/Reviews';
 
 
 // Service worker
@@ -53,6 +54,7 @@ ReactDOM.render(
 
         <Route path="/registration" component={Registration} />
         <Route path="/login" component={Login} />
+        <Route path="/myreviews" component={Reviews} />
 
         <Footer />
     </div>

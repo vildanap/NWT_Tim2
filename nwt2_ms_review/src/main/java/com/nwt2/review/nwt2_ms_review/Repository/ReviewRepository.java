@@ -13,6 +13,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     Iterable<Review> findByUserId(Integer userId);
     Long countByCityId(Integer cityId);
     Iterable<Review> findTop10ByOrderByIdDesc();
+    Boolean existsByCityId(Integer cityId);
 
     @Query("SELECT AVG(r.grade) from Review r where r.cityId = :cityId")
     Double getAverageGrade(@Param("cityId") Integer cityId);

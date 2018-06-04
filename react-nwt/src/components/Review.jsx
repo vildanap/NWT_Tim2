@@ -13,7 +13,8 @@ class Review extends Component {
         open: false,
         review: [],
         numberOfLikes: 0,
-        numberOfDislikes: 0
+        numberOfDislikes: 0,
+        hideReview: false
     };
 
     constructor() {
@@ -44,6 +45,15 @@ class Review extends Component {
         console.log("DISLIKED")
     }
 
+    deleteReview = async () => {
+        let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id;
+        let response = await api.send(endpoint, {}, "DELETE")
+
+        this.setState({hideReview: true});
+
+        console.log("DELETED")
+    }
+
     onOpenModal = () => {
         this.setState({ open: true });
       };
@@ -53,9 +63,9 @@ class Review extends Component {
       };
     
     render() {
-        const { open, review, numberOfLikes, numberOfDislikes } = this.state;
+        const { open, review, numberOfLikes, numberOfDislikes, hideReview } = this.state;
         return (
-            <div className="review-column">
+            <div className="review-column" hidden={hideReview}>
             <br/>
             <div className="row border review-wrapper">
             <div className="col-sm-6">
@@ -101,6 +111,10 @@ class Review extends Component {
                     <img src="https://www.berlin-welcomecard.de/sites/default/files/styles/stage_desktop_20x/public/berlin-welcomecard_hero_2880_.jpg?itok=J4euvI5S&timestamp=1517230620" />
                 </div>
             </Carousel>
+            </div>
+
+            <div hidden={localStorage.getItem('uid')!=review.userId}>
+            <i class="fa fa-trash icon-dislike" onClick={this.deleteReview.bind(this)}></i>
             </div>
 
             <Modal open={open} onClose={this.onCloseModal} center>
