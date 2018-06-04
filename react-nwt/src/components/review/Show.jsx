@@ -11,7 +11,8 @@ class Show extends Component {
     super(props);
     this.state = {
       review: {},
-      category:{}
+      category:{},
+      photos:[]
     };
   }
 
@@ -35,6 +36,14 @@ initilize = async () => {
      
         this.setState({category : category.data})
         console.log(this.state.category)
+
+        //slike
+        let endpoint2 = "nwt2_ms_like-service-client/reviewphotos/review/"+this.state.review.id+"/urls";
+        let photos = await api.send(endpoint2)
+
+     
+        this.setState({photos : photos.data})
+        console.log(this.state.photos)
     } catch (err) {
         console.log(err)
     }
@@ -53,11 +62,15 @@ initilize = async () => {
   }
 
   render() {
+      
+    let images = this.state.photos.map(image => {
+        return <img key={image} src={image} alt="" className="img-responsive" />
+     });
     return (
         <div className="container"> 
         <br></br>     
         <div className="row">
-          <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
+          <div className="col-md-8 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
           <div class="card">
   <div class="card-header">
     Review preview
@@ -73,18 +86,17 @@ initilize = async () => {
                 starCount={5}
                 value={this.state.review.grade}
                 />
-            <br/>
-            <Carousel className="carousel">
-                <div>
-                    <img src="https://www.visitberlin.de/system/files/styles/visitberlin_teaser_single_visitberlin_mobile_1x/private/image/_SCH6057_c_Scholvien_PSR_SC_STD_V2_DL_PPT_0.jpg?h=32462309&itok=Xi0CMgn5" />
-                </div>
-                <div>
-                    <img src="https://www.berlin-welcomecard.de/sites/default/files/styles/stage_desktop_20x/public/berlin-welcomecard_hero_2880_.jpg?itok=J4euvI5S&timestamp=1517230620" />
-                </div>
+    <div className="col-md-8 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
+
+            <h5 class="card-title">Photos</h5>        
+            <Carousel className="carousel" >
+            {images}
             </Carousel>
+            </div>
                 <br></br>
-    <Link to="/" ><button className="btn btn-primary"> Back</button></Link>
-    <button onClick={this.delete.bind(this, this.state.review.id)} className="btn btn-danger"  >Delete</button>
+    <Link to={`/location/${this.state.review.cityId}`} ><button className="btn btn-primary"> Back</button></Link>
+    {this.state.review.id == localStorage.getItem('ui')?<button onClick={this.delete.bind(this, this.state.review.id)} className="btn btn-danger"  >Delete</button> : ''}
+    
 
   </div>
 </div>     
