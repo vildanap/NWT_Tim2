@@ -40,15 +40,15 @@ ReactDOM.render(
     <div>
         <Menu />
         <Route exact path="/" component={Landing} /> 
-  
-        <Route path="/location/:id" component={Location} />
+
+        <Route exact path="/location/:id" component={Location} />
         <Route exact path="/country/create" component={CreateCountry} />
         <Route exact path="/country/show/:id" component={ShowCountry} />
         <Route path='/country/edit/:id' component={EditCountry} />
         <Route exact path="/review/create" component={CreateReview} />
         <Route exact path="/review/show/:id" component={ShowReview} />
         <Route path='/review/edit/:id' component={EditReview} />
-        <Route exact path="/location/create" component={LocationCreate} />
+        <Route exact path="/location/action/create" component={LocationCreate} />
         <Route exact path="/location" component={LocationsAll} />
         <Route path='/location/edit/:id' component={LocationEdit} />
 

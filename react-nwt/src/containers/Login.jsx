@@ -42,18 +42,17 @@ class Login extends Component {
 
             // set the token
             localStorage.setItem('token', token);
-             //user_id 
-             axios.get("http://localhost:8084/nwt2_ms_identity-service-client/users/findUsername/"+this.state.username+'?access_token='+localStorage.getItem('token'))
+             
+            //user_id 
+            axios.get("http://localhost:8084/nwt2_ms_identity-service-client/users/findUsername/"+this.state.username+'?access_token='+localStorage.getItem('token'))
              .then((result) => {
                console.log(result);
                localStorage.setItem('uid', result.data.id);
 
              });
-            
-
 
             // redirect to home
-           window.location = "/"
+            window.location = "/"
         } catch (err) {
         
         }

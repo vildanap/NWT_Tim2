@@ -36,11 +36,13 @@ class Index extends Component {
 
   delete = async (id) => {  
     try {
-      let response = await axios.delete('http://localhost:8084/nwt2_ms_location-service-client/locations/'+id+'?access_token='+localStorage.getItem('token'))
-      alert("Successfully deleted!")
+      if(window.confirm("Are you sure you want to delete this location?")) {
+        let response = await axios.delete('http://localhost:8084/nwt2_ms_location-service-client/locations/'+id+'?access_token='+localStorage.getItem('token'))
+        alert("Successfully deleted!")
 
-      // initlize the whole list once again
-      this.initilize()
+        // initlize the whole list once again
+        this.initilize()
+      }
     } catch (err) {
       alert('Could not delete this')
     }

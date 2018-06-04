@@ -21,13 +21,16 @@ class Show extends Component {
   }
 
   delete(id){
-    console.log(id);
-    axios.delete('http://localhost:8084/nwt2_ms_location-service-client/countries/'+id+'?access_token='+localStorage.getItem('token'))
-      .then((result) => {
-        console.log(result);
-        alert("Poruka: Deleted!");
-        this.props.history.push("/")
-      });
+    if(window.confirm("Are you sure you want to delete this country?")) {
+      axios.delete('http://localhost:8084/nwt2_ms_location-service-client/countries/'+id+'?access_token='+localStorage.getItem('token'))
+        .then((result) => {
+          alert("Successfully deleted the country!")
+          this.props.history.push("/")
+        })
+        .catch((err) => {
+          alert("We are sorry, something went wrong.")
+        });
+    }
   }
 
   render() {

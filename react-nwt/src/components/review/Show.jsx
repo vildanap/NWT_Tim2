@@ -21,44 +21,46 @@ class Show extends Component {
     this.initilize()
   }
 
-initilize = async () => {
-    try {
-        let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.match.params.id;
-        let review = await api.send(endpoint)
+  initilize = async () => {
+      try {
+          let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.match.params.id;
+          let review = await api.send(endpoint)
 
-     
-        this.setState({review : review.data})
-        console.log(this.state.review)
+      
+          this.setState({review : review.data})
+          console.log(this.state.review)
 
-        let endpoint1 = "nwt2_ms_review-service-client/types/"+this.state.review.reviewTypeId;
-        let category = await api.send(endpoint1)
+          let endpoint1 = "nwt2_ms_review-service-client/types/"+this.state.review.reviewTypeId;
+          let category = await api.send(endpoint1)
 
-     
-        this.setState({category : category.data})
-        console.log(this.state.category)
+      
+          this.setState({category : category.data})
+          console.log(this.state.category)
 
-        //slike
-        let endpoint2 = "nwt2_ms_like-service-client/reviewphotos/review/"+this.state.review.id+"/urls";
-        let photos = await api.send(endpoint2)
+          //slike
+          let endpoint2 = "nwt2_ms_like-service-client/reviewphotos/review/"+this.state.review.id+"/urls";
+          let photos = await api.send(endpoint2)
 
-     
-        this.setState({photos : photos.data})
-        console.log(this.state.photos)
-    } catch (err) {
-        console.log(err)
-    }
-} 
+      
+          this.setState({photos : photos.data})
+          console.log(this.state.photos)
+      } catch (err) {
+          console.log(err)
+      }
+  } 
 
   
-
   delete(id){
-    console.log(id);
-    axios.delete('http://localhost:8084/nwt2_ms_review-service-client/reviews/'+id+'?access_token='+localStorage.getItem('token'))
-      .then((result) => {
-        console.log(result);
-        alert("Poruka: Deleted!");
-        this.props.history.push("/")
-      });
+    if(window.confirm("Are you sure you want to delete this review?")) {
+      axios.delete('http://localhost:8084/nwt2_ms_review-service-client/reviews/'+id+'?access_token='+localStorage.getItem('token'))
+        .then((result) => {
+          alert("Successfully deleted")
+          this.props.history.push("/")
+        })
+        .catch((err) => {
+          alert("We are sorry, something went wrong!")
+        })
+    }
   }
 
   render() {

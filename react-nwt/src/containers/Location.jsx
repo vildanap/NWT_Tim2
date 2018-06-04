@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
 import Loading from '../components/common/Loading'
 import Review from '../components/Review'
@@ -59,6 +60,15 @@ class Location extends Component {
                                 </div>
                                 <img src={ this.state.location.photoUrl } />
                             </div>
+
+                            <Mapa 
+                                isMarkerShown={false} 
+                                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                                loadingElement={<div style={{ height: `100%` }} />}
+                                containerElement={<div style={{ height: `400px` }} />}
+                                mapElement={<div style={{ height: `100%` }} />}
+                            />
+
                             <div className="row"> 
                             <button>
                             <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >ADD REVIEW</Link>
@@ -78,5 +88,13 @@ class Location extends Component {
         )
     }
 }
+
+const Mapa = withScriptjs(withGoogleMap((props) => 
+    <GoogleMap
+        defaultZoom={8}
+        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+    >
+    </GoogleMap>
+))
 
 export default Location

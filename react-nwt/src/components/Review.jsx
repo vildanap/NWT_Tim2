@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import StarRatingComponent from 'react-star-rating-component';
-import Modal from 'react-responsive-modal';
-
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import StarRatingComponent from 'react-star-rating-component'
+import Modal from 'react-responsive-modal'
 
 import * as api from '../api'
 
 class Review extends Component {
-
-    state = {
-        open: false,
-        review: [],
-        numberOfLikes: 0,
-        numberOfDislikes: 0,
-        hideReview: false
-    };
-
     constructor() {
         super()
+
+        this.state = {
+            open: false,
+            review: [],
+            numberOfLikes: 0,
+            numberOfDislikes: 0,
+            hideReview: false,
+            userId: null,
+            username: ''
+        }
     }
 
     componentWillMount() {
@@ -26,23 +26,48 @@ class Review extends Component {
     }
 
     initilize = async () => {
-        this.setState({review: this.props.value, numberOfLikes: this.props.value.numberOfLikes, numberOfDislikes: this.props.value.numberOfDislikes})
-    } 
+        try {
+            this.setState({
+                review: this.props.value, 
+                numberOfLikes: this.props.value.numberOfLikes, 
+                numberOfDislikes: this.props.value.numberOfDislikes,
+                userId: this.props.value.userId
+            })
 
+            let id = this.props.value.userId
+
+            let endpoint = '/nwt2_ms_identity-service-client/users/find/' + id
+            let response = await api.send(endpoint)
+
+            let username = response.data.username
+
+            this.setState({ username: username })
+        } catch(err) {
+            console.log(this.props)
+        }
+    } 
     
     like = async () => {
-        let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/like";
-        let response = await api.send(endpoint, {}, "PUT")
-        this.setState({ numberOfLikes: this.state.numberOfLikes+1 });
-        console.log("LIKED")
+        try {
+            let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/like";
+            let response = await api.send(endpoint, {}, "PUT")
+            this.setState({ numberOfLikes: this.state.numberOfLikes+1 });
+            console.log("LIKED")
+        } catch(err) {
+            alert("We are sorry, something went wrong.")
+        }
     }
 
     dislike = async () => {
-        let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/dislike";
-        let response = await api.send(endpoint, {}, "PUT")
-        this.setState({ numberOfDislikes: this.state.numberOfDislikes+1 });
+        try {
+            let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/dislike";
+            let response = await api.send(endpoint, {}, "PUT")
+            this.setState({ numberOfDislikes: this.state.numberOfDislikes+1 });
 
-        console.log("DISLIKED")
+            console.log("DISLIKED")
+        } catch(err) {
+            alert("We are sorry, something went wrong.")
+        }
     }
 
     deleteReview = async () => {
@@ -63,7 +88,7 @@ class Review extends Component {
       };
     
     render() {
-        const { open, review, numberOfLikes, numberOfDislikes, hideReview } = this.state;
+        const { open, review, numberOfLikes, numberOfDislikes, hideReview, username } = this.state;
         return (
             <div className="review-column" hidden={hideReview}>
             <br/>
@@ -72,7 +97,7 @@ class Review extends Component {
             <br/>
             <div className="row">
             <div className="col-sm-6 review-username">
-            aminapuce
+            {username}
             </div>
             <div className="col-sm-6 review-username">
             <StarRatingComponent 

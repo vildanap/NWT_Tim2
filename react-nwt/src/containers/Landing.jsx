@@ -22,7 +22,8 @@ class Landing extends Component {
     }
 
     componentWillMount() {
-        this.initilize()
+        this.initilizeLocations()
+        this.initilizeReviews()
     }
     
     componentDidMount() {
@@ -32,19 +33,23 @@ class Landing extends Component {
     /**
      * Initilize method
      */
-    initilize = async () => {
+    initilizeLocations = async () => {
         try {
             let endpoint = "nwt2_ms_location-service-client/locations/all"
             let locations = await api.send(endpoint);
-            
-            let endpointReviews = "nwt2_ms_review-service-client/reviews/recent/";
-            let reviews = await api.send(endpointReviews)
 
             if(locations.data) {
                 this.setState({locations : locations.data});
-            }
+            }            
+        } catch (err) {
+            console.log(err.response)
+        }
+    } 
 
-            console.log(reviews)
+    initilizeReviews = async () => {
+        try {
+            let endpointReviews = "nwt2_ms_review-service-client/reviews/recent/";
+            let reviews = await api.send(endpointReviews)
 
             if(reviews.data) {
                 this.setState({ recent : reviews.data })
@@ -52,7 +57,7 @@ class Landing extends Component {
         } catch (err) {
             console.log(err.response)
         }
-    } 
+    }
 
     /**
      *  Live seaarch method
