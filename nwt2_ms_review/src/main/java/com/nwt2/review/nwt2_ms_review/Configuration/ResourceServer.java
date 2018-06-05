@@ -60,6 +60,8 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/reviews/recent").permitAll()
+                .antMatchers("/reviews/location/info/{id}").permitAll()
+                .antMatchers("/reviews/location/{id}").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
