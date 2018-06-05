@@ -45,16 +45,18 @@ class Login extends Component {
              
             //user_id 
             axios.get("http://localhost:8084/nwt2_ms_identity-service-client/users/findUsername/"+this.state.username+'?access_token='+localStorage.getItem('token'))
-             .then((result) => {
-               console.log(result);
-               localStorage.setItem('uid', result.data.id);
+            .then((result) => {
+                console.log(result);
+                localStorage.setItem('uid', result.data.id);
 
-             });
-
-            // redirect to home
-            window.location = "/"
+                // redirect to home
+                window.location = "/"
+            })
         } catch (err) {
-        
+            localStorage.removeItem('token')
+            localStorage.removeItem('uid')
+
+            alert('Something went wrong :(')
         }
     } 
 

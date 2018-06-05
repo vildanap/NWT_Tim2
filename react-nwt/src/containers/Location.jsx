@@ -60,26 +60,29 @@ class Location extends Component {
                                 </div>
                                 <img src={ this.state.location.photoUrl } />
                             </div>
-
                             <Mapa 
                                 isMarkerShown={false} 
-                                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNbaaf1ZV6KLIeL3RLhhUbIsJDeCocUeU&v=3.exp&libraries=geometry,drawing,places"
                                 loadingElement={<div style={{ height: `100%` }} />}
                                 containerElement={<div style={{ height: `400px` }} />}
                                 mapElement={<div style={{ height: `100%` }} />}
+                                lat={this.state.location.latitude}
+                                lng={this.state.location.longitude}
                             />
 
-                            <div className="row"> 
-                            <button>
-                            <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >ADD REVIEW</Link>
-                            </button>
-                            </div>
                             <div className="row">
                                 {
                                     this.state.reviews.map(
                                         review => <Review value={review} />
                                     )
                                 }
+                            </div>
+                            <div className="row options"> 
+                                <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >
+                                    <button className="btn btn-primary float-right">
+                                        ADD REVIEW
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     )
@@ -92,7 +95,7 @@ class Location extends Component {
 const Mapa = withScriptjs(withGoogleMap((props) => 
     <GoogleMap
         defaultZoom={8}
-        defaultCenter={{ lat: -34.397, lng: 150.644 }}
+        defaultCenter={{ lat: props.lat, lng: props.lng }}
     >
     </GoogleMap>
 ))

@@ -158,8 +158,8 @@ initilize = async () => {
                     <div className="text-danger">
                       {this.validator.message('country', selectedOption, 'required')}
                     </div>
-            <br></br>
-                      <button type="submit" className="btn btn-default">Submit</button>
+                      <br></br>
+                    <button type="submit" className="btn btn-default">Submit</button>
                   </form>
                 </div>
               </div>

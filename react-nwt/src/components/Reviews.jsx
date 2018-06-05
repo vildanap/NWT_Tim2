@@ -57,7 +57,8 @@ class Reviews extends Component {
                             <div className="row">
                                 {
                                     this.state.reviews.map(
-                                        review => <Review value={review} />
+                                        review => <Review value={review} 
+                                                            reinitilize={this.initilize}/>
                                     )
                                 }
                             </div>

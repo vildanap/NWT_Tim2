@@ -17,6 +17,7 @@ import java.util.Optional;
 /**
  * Created by amina on 3/25/2018.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/photos")
 public class PhotoController {

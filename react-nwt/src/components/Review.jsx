@@ -71,24 +71,24 @@ class Review extends Component {
     }
 
     deleteReview = async () => {
-        let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id;
+        let endpoint = "nwt2_ms_review-service-client/reviews/" + this.props.value.id;
         let response = await api.send(endpoint, {}, "DELETE")
 
-        this.setState({hideReview: true});
+        this.props.reinitilize()
 
         console.log("DELETED")
     }
 
     onOpenModal = () => {
         this.setState({ open: true });
-      };
-     
-      onCloseModal = () => {
+    };
+    
+    onCloseModal = () => {
         this.setState({ open: false });
-      };
+    };
     
     render() {
-        const { open, review, numberOfLikes, numberOfDislikes, hideReview, username } = this.state;
+        const { username, open, review, numberOfLikes, numberOfDislikes, hideReview } = this.state;
         return (
             <div className="review-column" hidden={hideReview}>
             <br/>

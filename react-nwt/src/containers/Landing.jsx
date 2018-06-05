@@ -99,8 +99,7 @@ class Landing extends Component {
                                 search={this.search}
                                 keyword={this.state.keyword}
                                 />
-                            <Locations locations={this.state.locations} /> 
-                            <Reviews recent={this.state.recent} /> 
+                            <Locations locations={this.state.locations} />
                         </div>
                     )
                 }  

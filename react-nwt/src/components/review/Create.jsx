@@ -47,17 +47,16 @@ class Create extends Component {
         let types = await api.send(endpoint)
 
         this.setState({types : types.data})
-
-        console.log(this.state.types)
     } catch (err) {
-        console.log(err)
+        alert('Whoops! Seems like we could not load all the data properly :(')
     }
-} 
+  } 
 
-handleChange = (selectedOption) => {
-  this.setState({ selectedOption });
-  console.log(`Selected: ${selectedOption.value}`);
-}       
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Selected: ${selectedOption.value}`);
+  }       
+  
   onChange = (e) => {
     const state = this.state
     state[e.target.name] = e.target.value;
