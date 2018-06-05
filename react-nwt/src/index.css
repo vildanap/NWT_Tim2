@@ -270,7 +270,6 @@ body {
 
 /**Review **/
 .review-wrapper {
-  background: gainsboro;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -358,11 +357,10 @@ body {
 }
 .review-column{
   position: relative;
- display: block;
- padding: 10px 15px;
- background-color: #343a40;
- width: 50%;
- float: left
+  display: block;
+  padding: 10px 15px;
+  width: 50%;
+  float: left;
 }
 
 .trim-text {
