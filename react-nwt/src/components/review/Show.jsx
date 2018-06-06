@@ -72,7 +72,7 @@ class Show extends Component {
         <div className="container"> 
         <br></br>     
         <div className="row">
-          <div className="col-md-8 offset-md-3 col-sm-8 offset-sm-2 col-xs-12">
+          <div className="col-md-8 offset-md-2 col-sm-8 offset-sm-2 col-xs-12">
           <div class="card">
   <div class="card-header">
     Review preview

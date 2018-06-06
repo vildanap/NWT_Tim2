@@ -36,7 +36,6 @@ class Review extends Component {
 
             let id = this.props.value.userId
 
-//            let endpoint = '/nwt2_ms_identity-service-client/users/find/' + id
             let endpoint = 'nwt2_ms_review-service-client/user/' + id
             let response = await api.send(endpoint)
 
@@ -44,16 +43,23 @@ class Review extends Component {
 
             this.setState({ username: username })
         } catch(err) {
-            console.log(this.props)
+            alert("Whoops! Something went wrong while redaing this review. Please try again!")
         }
     } 
     
     like = async () => {
         try {
+            // check if there is already a reaction
+            if(localStorage.getItem('reaction-' + this.props.value.id) != null) {
+                alert('You have already reacted to this review!')
+                return
+            }
+
             let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/like";
             let response = await api.send(endpoint, {}, "PUT")
             this.setState({ numberOfLikes: this.state.numberOfLikes+1 });
-            console.log("LIKED")
+
+            localStorage.setItem('reaction-' + this.props.value.id, true)
         } catch(err) {
             alert("We are sorry, something went wrong.")
         }
@@ -61,12 +67,18 @@ class Review extends Component {
 
     dislike = async () => {
         try {
+            if(localStorage.getItem('reaction-' + this.props.value.id) != null) {
+                alert('You have already reacted to this review!')
+                return
+            }
+
             let endpoint = "nwt2_ms_review-service-client/reviews/"+this.props.value.id+"/dislike";
             let response = await api.send(endpoint, {}, "PUT")
             this.setState({ numberOfDislikes: this.state.numberOfDislikes+1 });
 
-            console.log("DISLIKED")
+            localStorage.setItem('reaction-' + this.props.value.id, true)
         } catch(err) {
+            console.log(err)
             alert("We are sorry, something went wrong.")
         }
     }

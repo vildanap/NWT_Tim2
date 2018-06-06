@@ -27,6 +27,9 @@ class Create extends Component {
       city_id: 1,
       types: [] ,
       selectedOption: '',
+      images: [
+        'http://sarajevo.ba/upload/uploads/2016/12/Miljacka-1024x683.jpg'
+      ]
     }
 
     this.validator = new SimpleReactValidator()
@@ -78,15 +81,16 @@ class Create extends Component {
       const { comment, grade, number_of_likes, number_of_dislikes, review_type_id,selectedOption, user_id, city_id} = this.state
 
       let endpoint = "nwt2_ms_review-service-client/reviews/create"
-      let response = await api.send(endpoint,{ comment: comment, grade: grade, numberOfLikes: number_of_likes, numberOfDislikes: number_of_dislikes, reviewTypeId: selectedOption.value, userId: localStorage.getItem('uid'), cityId: this.props.location.state.cityId} , "POST")
+      let response = await api.send(endpoint,{ comment: comment, grade: grade, numberOfLikes: number_of_likes, numberOfDislikes: number_of_dislikes, reviewTypeId: selectedOption.value, userId: localStorage.getItem('uid'), cityId: this.props.location.state.cityId, images : this.state.images} , "POST")
     
       if(response.status == "200" ||response.status == "201"){ 
         alert("Successfully created the review!")
         // redirect to the location
-        window.location = 'location/' + this.state.city_id
+        window.location = 'location/' + this.props.location.state.cityId
       }
     }
     catch (err) {
+      console.log(err.response)
       alert("We are sorry, something went wrong :(")
     }
   }
@@ -104,7 +108,6 @@ class Create extends Component {
                 <Loading />
             )
         }
-
         {
             !this.state.loading && (
                 <div className="container">      
@@ -116,7 +119,7 @@ class Create extends Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <label htmlFor="isbn">Comment:</label>
-                  <textarea className="form-control" name="comment" value={comment} onChange={this.onChange} placeholder="Comment"> </textarea>
+                  <textarea className="form-control" name="comment" value={comment} onChange={this.onChange} placeholder="Comment"></textarea>
 
                   <div className="text-danger">
                     {this.validator.message('comment', comment, 'required|min:5')}
@@ -153,6 +156,7 @@ class Create extends Component {
                 </div>
               </div>
 
+              
                 <button type="submit" className="btn btn-primary float-right">Submit</button>
                     </form>
                   </div>
