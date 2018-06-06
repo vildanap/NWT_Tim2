@@ -50,7 +50,7 @@ services:
     container_name: mysql-location
 
     environment:
-      - MYSQL_ROOT_PASSWORD=ohriohri
+      - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=nwt2_location
     networks:
       - appnetwork
@@ -93,6 +93,9 @@ services:
       - SPRING_PROFILES_ACTIVE=enableEureka
       - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eurekaserver:8761/eureka
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    
+    
     networks:
       - appnetwork
   
@@ -121,7 +124,7 @@ services:
     image: mysql:5.6
     container_name: mysql-identity
     environment:
-      - MYSQL_ROOT_PASSWORD=ohriohri
+      - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=nwt2_identity
     networks:
       - appnetwork
@@ -132,7 +135,7 @@ services:
     networks:
       - appnetwork
     environment:
-      - MYSQL_ROOT_PASSWORD=ohriohri
+      - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=nwt2_review
 
   rabbitmq:
@@ -153,8 +156,21 @@ services:
     networks:
       - appnetwork
     environment:
-      - MYSQL_ROOT_PASSWORD=ohriohri
+      - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=nwt2_like
+
+  frontend:
+    build: ./react-nwt
+    container_name: frontend_container
+    ports:
+      - 3000:3000
+    depends_on:
+      - gateway
+    volumes:
+      - ./react-nwt/src:/usr/src/app/src
+      - ./react-nwt/public:/usr/src/app/public 
+    networks:
+      - appnetwork 
 
 networks:
   appnetwork:
