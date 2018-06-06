@@ -34,9 +34,12 @@ class Location extends Component {
             let endpointReviews="nwt2_ms_review-service-client/reviews/location/"+this.props.match.params.id;
             let reviews = await api.send(endpointReviews)
 
-            this.setState({location : location.data, reviews : reviews.data})
+            this.setState({location : location.data})
 
-            console.log(this.state.location)
+            if(reviews.data) {
+                this.setState({ reviews : reviews.data })
+            }
+
             console.log(this.state.reviews)
         } catch (err) {
             console.log(err)
@@ -78,10 +81,8 @@ class Location extends Component {
                                 }
                             </div>
                             <div className="row options"> 
-                                <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} >
-                                    <button className="btn btn-primary float-right">
-                                        ADD REVIEW
-                                    </button>
+                                <Link to={{pathname: '/review/create', state: { cityId: this.state.location.id}}} className="link-add" >
+                                    <i class="far fa-star"></i> ADD REVIEW
                                 </Link>
                             </div>
                         </div>

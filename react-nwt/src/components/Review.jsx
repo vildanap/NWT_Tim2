@@ -36,7 +36,8 @@ class Review extends Component {
 
             let id = this.props.value.userId
 
-            let endpoint = '/nwt2_ms_identity-service-client/users/find/' + id
+//            let endpoint = '/nwt2_ms_identity-service-client/users/find/' + id
+            let endpoint = 'nwt2_ms_review-service-client/user/' + id
             let response = await api.send(endpoint)
 
             let username = response.data.username

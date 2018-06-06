@@ -82,7 +82,7 @@ public class UserRestController {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         usersService.saveUser(user);
-        //eh.handleAfterCreated(user);
+        eh.handleAfterCreated(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);

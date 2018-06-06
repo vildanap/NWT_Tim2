@@ -43,23 +43,14 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {/*
-        http.
-                anonymous().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-  .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
-    }
-        http.
-                authorizeRequests()
-                .antMatchers("/locations/all").permitAll()
-                .antMatchers("/locations/{ID}").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());*/
+    public void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
                 .antMatchers("/reviews/recent").permitAll()
+                .antMatchers("/reviews/user/**").permitAll()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/reviews/location/**").permitAll()
+                .antMatchers("/reviews/location/info/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());

@@ -30,15 +30,20 @@ public class Nwt2MsLocationApplication {
     @Bean
     public CommandLineRunner demo(CountryRepository country, LocationRepository location) {
         return (args) -> {
-            country.save(new Country("Germany"));
+            Country g = new Country("Germany");
+            country.save(g);
             country.save(new Country("Spain"));
-            country.save(new Country("France"));
+            Country f = new Country("France");
+            country.save(f);
             Country c = new Country("Bosnia and Herzegovina");
             country.save(c);
+            Country usa = new Country("United States of America");
+            country.save(usa);
 
-            location.save(new Location("/resources/images/logo.jpg", "Berlin", "Description.", (float) 48.864716, (float) 2.349014, c));
-
-
+            location.save(new Location("https://www.telegraph.co.uk/content/dam/Travel/hotels/europe/france/paris/eiffel-tower-paris-p.jpg", "Paris", "Description.", (float) 48.864716, (float) 2.349014, f));
+            location.save(new Location("https://www.visitberlin.de/system/files/styles/visitberlin_bleed_header_visitberlin_mobile_1x/private/image/iStock_000074120341_Double_DL_PPT_0.jpg?h=a66ba266&itok=2YXS5_33", "Berlin", "Description.", (float) 52.51, (float) 13.349014, g));
+            location.save(new Location("https://media.cntraveler.com/photos/5a9d825ad363c34048b3639a/3:2/w_385,c_limit/GettyImages-640006562.jpg", "New York", "Description.", (float) 73.9667, (float) 40.783, usa));
+            location.save(new Location("https://sarajevo.travel/assets/photos/tours/original/eat-pray-love-1407767838.jpg", "Sarajevo", "Description.", (float) 43.83, (float) 18.37, c));
         };
     }
     @Bean

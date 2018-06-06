@@ -50,7 +50,7 @@ services:
     container_name: mysql-location
 
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=ohriohri
       - MYSQL_DATABASE=nwt2_location
     networks:
       - appnetwork
@@ -121,7 +121,7 @@ services:
     image: mysql:5.6
     container_name: mysql-identity
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=ohriohri
       - MYSQL_DATABASE=nwt2_identity
     networks:
       - appnetwork
@@ -132,7 +132,7 @@ services:
     networks:
       - appnetwork
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=ohriohri
       - MYSQL_DATABASE=nwt2_review
 
   rabbitmq:
@@ -153,7 +153,7 @@ services:
     networks:
       - appnetwork
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=ohriohri
       - MYSQL_DATABASE=nwt2_like
 
 networks:

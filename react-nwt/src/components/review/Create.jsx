@@ -119,7 +119,7 @@ class Create extends Component {
                   <textarea className="form-control" name="comment" value={comment} onChange={this.onChange} placeholder="Comment"> </textarea>
 
                   <div className="text-danger">
-                    {this.validator.message('comment', comment, 'required|alpha|min:5')}
+                    {this.validator.message('comment', comment, 'required|min:5')}
                   </div>
                 </div>
                 <div className="form-group">

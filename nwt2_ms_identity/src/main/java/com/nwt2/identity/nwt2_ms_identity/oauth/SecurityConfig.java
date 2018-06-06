@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .antMatchers("/users**","/sessions/**").hasRole("ADMIN")
+                .antMatchers("/users/find/**").permitAll()
                 .antMatchers("/resources/**","/signup").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
@@ -116,6 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS)
-        .antMatchers("/users/new");
+        .antMatchers("/users/new")
+        .antMatchers("/users/find/**");
     }
 }

@@ -1,25 +1,31 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 // API wrapper 
 import * as api from '../api'
 import * as auth from '../auth'
-import axios from 'axios'
 
 // components 
 import LoginForm from '../components/auth/Login'
+import Loading from '../components/common/Loading'
 
 class Login extends Component {
     constructor() {
         super()
 
         this.state = {
+            loading : false,
             username : '',
             password : ''
         }
     }
 
     componentWillMount() {
-        
+        auth.redirectIfAuthenticated()
+    }
+
+    componentDidMount() {
+        setTimeout(() => this.setState({ loading: false }), 1200)
     }
 
     login = async () => {
@@ -69,10 +75,19 @@ class Login extends Component {
         auth.redirectIfAuthenticated()
         return (
             <div>
-                <LoginForm 
-                    onChange={this.onChange}
-                    login={this.login}
-                    credentials={this.state}/>
+                {
+                    this.state.loading && (
+                        <Loading />
+                    )
+                }
+                {
+                    !this.state.loading && (
+                        <LoginForm 
+                            onChange={this.onChange}
+                            login={this.login}
+                            credentials={this.state}/>
+                    )
+                }
             </div>
         )
     }
