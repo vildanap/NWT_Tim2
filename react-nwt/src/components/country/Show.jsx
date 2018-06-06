@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import * as auth from '../../auth'
+
 class Show extends Component {
 
   constructor(props) {
@@ -9,6 +11,10 @@ class Show extends Component {
     this.state = {
       country: {}
     };
+  }
+
+  componentWillMount() {
+    auth.redirectIfNotAuthenticated()
   }
 
   componentDidMount() {

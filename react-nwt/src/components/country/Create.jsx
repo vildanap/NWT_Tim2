@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator'
 
 import * as api from '../../api'
+import * as auth from '../../auth'
 
 class Create extends Component {
 
@@ -17,6 +18,10 @@ class Create extends Component {
     }
 
     this.validator = new SimpleReactValidator()
+  }
+
+  componentWillMount() {
+    auth.redirectIfNotAuthenticated()
   }
 
   onChange = (e) => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import * as api from '../../api'
+import * as auth from '../../auth'
 
 import Loading from '../common/Loading'
 
@@ -16,6 +17,7 @@ class Edit extends Component {
   }
 
   componentWillMount() {
+    auth.redirectIfNotAuthenticated()
     this.initilize()
   }
 

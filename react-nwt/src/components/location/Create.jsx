@@ -117,14 +117,14 @@ initilize = async () => {
                       <label htmlFor="isbn">Description:</label>
                       <input type="text" className="form-control" name="description" value={description} onChange={this.onChange} placeholder="Description" />
                       <div className="text-danger">
-                        {this.validator.message('description', description, 'required|alpha|min:5')}
+                        {this.validator.message('description', description, 'required|min:5')}
                       </div>
                     </div>
                     <div className="form-group">
                       <label htmlFor="isbn">Photo URL:</label>
                       <input type="text" className="form-control" name="photoUrl" value={photoUrl} onChange={this.onChange} placeholder="Photo URL" />
                       <div className="text-danger">
-                        {this.validator.message('photoUrl', photoUrl, 'required|alpha')}
+                        {this.validator.message('photoUrl', photoUrl, 'required')}
                       </div>
                     </div>
 
