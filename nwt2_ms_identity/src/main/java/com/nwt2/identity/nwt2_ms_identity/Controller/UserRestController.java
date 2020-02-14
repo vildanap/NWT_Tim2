@@ -2,10 +2,13 @@ package com.nwt2.identity.nwt2_ms_identity.Controller;
 
 import com.nwt2.identity.nwt2_ms_identity.Model.Role;
 import com.nwt2.identity.nwt2_ms_identity.Model.User;
+import com.nwt2.identity.nwt2_ms_identity.Services.UserDetailsService;
 import com.nwt2.identity.nwt2_ms_identity.Services.UserEventHandler;
-import com.nwt2.identity.nwt2_ms_identity.Services.UsersService;
+import com.nwt2.identity.nwt2_ms_identity.Services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +27,14 @@ import java.util.Optional;
 @RestController
 @RefreshScope
 @RequestMapping("/users")
+@EnableJpaRepositories("com.nwt2.identity")
 public class UserRestController {
 
   @Autowired
   private UserEventHandler eh;
 
   @Autowired
-  private UsersService usersService;
+  private UserDetailsService usersService;
 
 
     // -------------------Retrieve All Users---------------------------------------------
