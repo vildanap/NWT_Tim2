@@ -67,7 +67,7 @@ mvnw java -jar \target\nwt2_ms_location-0.0.1-SNAPSHOT.jar
 ### How to check if it is working?
 After running microservices, open the database (e.g. via PHPMyAdmin) and see if tables for each microservice have been created.
 Open eureka http://localhost:8761/, all microservices should be registered within Eureka.
-![microservices_eureka](https://github.com/vildanap/NWT_Tim2/eureka.PNG)
+![microservices_eureka](https://github.com/vildanap/NWT_Tim2/blob/master/eureka.PNG)
 
 # Frontend
 ```
