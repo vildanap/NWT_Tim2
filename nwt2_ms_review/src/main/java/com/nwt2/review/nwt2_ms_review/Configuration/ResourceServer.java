@@ -44,15 +44,11 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
-                .antMatchers("/reviews/recent").permitAll()
-                .antMatchers("/reviews/user/**").permitAll()
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/reviews/location/**").permitAll()
-                .antMatchers("/reviews/location/info/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()//allow CORS option call
+        .antMatchers(HttpMethod.HEAD,"/**").permitAll();
+
     }
+
 }

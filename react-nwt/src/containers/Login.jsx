@@ -43,7 +43,7 @@ class Login extends Component {
                 'Authorization': 'Basic ZGV2Z2xhbi1jbGllbnQ6ZGV2Z2xhbi1zZWNyZXQ='
             }
 
-            let response = await api.send(endpoint, payload, "POST", headers, true)
+	    let response = await api.send(endpoint, payload, "POST", headers, true)
             let token = response.data.access_token
 
             // set the token

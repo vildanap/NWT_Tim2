@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom';
 
 class LoginForm extends Component {
     render() {
@@ -19,7 +20,9 @@ class LoginForm extends Component {
 
                             <a href="javascript:void(0)" className="btn btn-primary float-right" onClick={this.props.login}>
                                 Login
-                            </a>    
+                            </a>   
+			    <Link to="/registration"> Not registered yet?
+			    </Link>
                         </div>
                     </div>
                 </div>

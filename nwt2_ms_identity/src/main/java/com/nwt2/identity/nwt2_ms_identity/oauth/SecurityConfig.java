@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.web.session.SessionManagementFilter;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -63,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                   .antMatchers("/api-docs/**").permitAll();
       }
   */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -78,15 +80,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .jee()
                 .mappableRoles("ROLE_USER","ROLE_ADMIN");
-     /* http
+      http
               .csrf().disable()
               .authorizeRequests()
               .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()//allow CORS option call
+              .antMatchers(HttpMethod.HEAD,"/**").permitAll()
               .anyRequest().authenticated()
               .and()
               .formLogin()
               .and()
-              .httpBasic(); */
+              .httpBasic();
     }
     @Bean
     public TokenStore tokenStore() {
