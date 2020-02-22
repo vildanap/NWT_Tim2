@@ -2,17 +2,10 @@
 > Travel review is microservice based web application that lets end-users to leave reviews with photos for specific locations. 
 
 ## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
+* [Prerequisites](#Prerequisites)
 * [Setup for local development](#setup)
 * [Docker](#docker)
 * [Status](#status)
-* [Inspiration](#inspiration)
-
-
-## General info
-
-
 
 ## Prerequisites
 * JDK 8 
@@ -71,5 +64,12 @@ npm start
 ```
 ## Docker
 
-
+For each microservice build docker image from docker file using command
+```
+docker build -t identity_ms.
+```
+Deploy application using docker-compose command
+```
+docker-compose up
+```
 ## Status
